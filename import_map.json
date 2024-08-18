@@ -1,5 +1,7 @@
 {
   "imports": {
-    "@scope/": "./packages/"
+    "@scope/": "./packages/",
+    "preact": "https://esm.sh/preact@10.x",
+    "preact/": "https://esm.sh/preact@10.x/"
   }
 }

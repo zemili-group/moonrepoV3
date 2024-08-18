@@ -40,4 +40,5 @@ jobs:
         with:
           project: "zemili-client-web"
           entrypoint: "apps/zemili/clients/web/main.ts"
+          import-map: "./import_map.json"
           root: "."
