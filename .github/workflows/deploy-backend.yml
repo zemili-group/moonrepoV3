@@ -35,5 +35,5 @@ jobs:
         uses: denoland/deployctl@v1
         with:
           project: "zemili-service-backend"
-          entrypoint: "apps/zemili/backend/main.ts"
+          entrypoint: "main.ts"
           root: "apps/zemili/backend"
