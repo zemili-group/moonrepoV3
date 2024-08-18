@@ -1,0 +1,3 @@
+# Enable Deno
+deno:
+  version: "1.45.5"
