@@ -4,6 +4,7 @@
     "@std/assert": "jsr:@std/assert@1"
   },
   "workspace": [
+    "./apps/zemili/clients/web",
     "./apps/zemili/services/backend",
     "./packages/auth",
     "./packages/server",
