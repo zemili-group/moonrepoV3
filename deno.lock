@@ -26,6 +26,7 @@
       "jsr:@std/media-types@0.224": "jsr:@std/media-types@0.224.1",
       "jsr:@std/path@0.223": "jsr:@std/path@0.223.0",
       "jsr:@ts-rex/bcrypt@^1.0.3": "jsr:@ts-rex/bcrypt@1.0.3",
+      "npm:@types/node": "npm:@types/node@18.16.19",
       "npm:path-to-regexp@6.2.1": "npm:path-to-regexp@6.2.1",
       "npm:rxdb": "npm:rxdb@15.31.0_rxjs@7.8.1_graphql@15.9.0_ws@8.16.0",
       "npm:tailwindcss@3.4.1": "npm:tailwindcss@3.4.1_postcss@8.4.41"
@@ -2001,6 +2002,7 @@
     }
   },
   "redirects": {
+    "https://esm.sh/preact@10.x": "https://esm.sh/preact@10.23.0",
     "https://esm.sh/preact@10.x/jsx-runtime": "https://esm.sh/preact@10.23.0/jsx-runtime"
   },
   "remote": {
@@ -2011,6 +2013,7 @@
     "https://deno.land/x/djwt@v2.8/mod.ts": "7abba8518688e88648882a95161b42391ac6043c142b1ab491b36f712189e1e1",
     "https://deno.land/x/djwt@v2.8/signature.ts": "a5649368a4b433b2810e7d47f53661fe3b0f7fe1778cb49234ceae3d6e861185",
     "https://deno.land/x/djwt@v2.8/util.ts": "0d78272bd23a4656ceabe137d496fcca37cf3de36212477642aa5d85a880d87a",
+    "https://esm.sh/preact@10.23.0": "3a2b8635ac2435bd0086ff59dd3387d9d219ef6e75f240fcf6a28eac73cb68fa",
     "https://esm.sh/preact@10.23.0/jsx-runtime": "45333f10506a82c98e7e275632d63fb5ac13d884e343c7c1502b1b4aac4f8174",
     "https://esm.sh/stable/preact@10.23.0/denonext/jsx-runtime.js": "cc440e2f9e88750c0cfdc8807847791993cdc1f5f155ea41cf02134926bd8f1c",
     "https://esm.sh/stable/preact@10.23.0/denonext/preact.mjs": "0f0fbe7d20f470c4a9fc84df8ff0acef5db9563c410b49bf251a4d6917a882a6"
@@ -2021,6 +2024,11 @@
       "jsr:@std/assert@1"
     ],
     "members": {
+      "apps/zemili/clients/web": {
+        "dependencies": [
+          "npm:tailwindcss@3.4.1"
+        ]
+      },
       "packages/auth": {
         "dependencies": [
           "jsr:@ts-rex/bcrypt@^1.0.3"
