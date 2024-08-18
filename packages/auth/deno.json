@@ -1,8 +1,8 @@
 {
-    "name": "@scope/auth",
-    "exports": "./mod.ts",
-    "version": "0.0.1",
-    "imports": {
-        "@ts-rex/bcrypt": "jsr:@ts-rex/bcrypt@^1.0.3"
-    }
+  "name": "@scope/auth",
+  "exports": "./mod.ts",
+  "version": "0.0.1",
+  "imports": {
+    "@ts-rex/bcrypt": "jsr:@ts-rex/bcrypt@^1.0.3"
+  }
 }

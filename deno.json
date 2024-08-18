@@ -3,9 +3,10 @@
     "@oak/oak": "jsr:@oak/oak@^16.1.0",
     "@std/assert": "jsr:@std/assert@1"
   },
-  "workspaces": [
-    "./apps/**/*",
-    "./packages/**/*",
-    "./**/*"
+  "workspace": [
+    "./apps/zemili/services/backend",
+    "./packages/auth",
+    "./packages/server",
+    "./packages/data"
   ]
 }
