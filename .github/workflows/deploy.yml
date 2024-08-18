@@ -25,6 +25,7 @@ jobs:
 
       - name: Build step
         run: "deno task build"
+        working-directory: "./apps/zemili/clients/web"
 
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
