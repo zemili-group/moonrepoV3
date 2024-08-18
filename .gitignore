@@ -54,3 +54,11 @@ logs
 # moon
 .moon/cache
 .moon/docker
+
+# SSL/TLS Certificates
+*.pem
+*.key
+*.crt
+*.cer
+*.der
+*.priv

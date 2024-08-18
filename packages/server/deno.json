@@ -1,0 +1,9 @@
+{
+  "name": "@scope/server",
+  "exports": "./mod.ts",
+  "version": "0.0.1",
+  "imports": {
+    "@momiji/cors": "jsr:@momiji/cors@^1.0.1",
+    "@oak/oak": "jsr:@oak/oak@^16.1.0"
+  }
+}
