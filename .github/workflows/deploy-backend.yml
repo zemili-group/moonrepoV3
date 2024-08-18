@@ -1,4 +1,4 @@
-name: Deploy Backend
+name: Deploy Zemili Service Backend
 on:
   push:
     branches: main
@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    name: Deploy
+    name: Deploy Backend
     runs-on: ubuntu-latest
 
     permissions:

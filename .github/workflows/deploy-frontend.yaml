@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy Zemili Client Web
 on:
   push:
     branches: main
@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    name: Deploy
+    name: Deploy Frontend
     runs-on: ubuntu-latest
 
     permissions:
@@ -32,4 +32,5 @@ jobs:
         with:
           project: "zemili-client-web"
           entrypoint: "main.ts"
-          root: "apps/zemili/clients/web"
+          import-map: "./import_map.json"
+          root: "."
