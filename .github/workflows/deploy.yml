@@ -31,4 +31,4 @@ jobs:
         with:
           project: "zemili-client-web"
           entrypoint: "main.ts"
-          root: "apps/zemili/clients/web"
+          root: "./apps/zemili/clients/web"
