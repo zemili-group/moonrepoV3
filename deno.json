@@ -9,5 +9,16 @@
     "./packages/auth",
     "./packages/server",
     "./packages/data"
-  ]
+  ],
+  "fmt": {
+    "semicolons": "false",
+    "ignore": [
+      "**/node_modules"
+    ]
+  },
+  "lint": {
+    "ignore": [
+      "**/node_modules"
+    ]
+  }
 }
