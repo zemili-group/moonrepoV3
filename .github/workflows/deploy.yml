@@ -23,13 +23,17 @@ jobs:
         with:
           deno-version: v1.x
 
-      - name: Build step
-        run: "deno task build"
-        working-directory: "./apps/zemili/clients/web"
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Install step
+        run: "DENO_FUTURE=1"
 
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
-          project: "zemili-client-web"
-          entrypoint: "main.ts"
-          root: "./apps/zemili/clients/web"
+          project: "zemili-service-backend"
+          entrypoint: "apps/zemili/services/backend/main.ts"
+          root: "."
