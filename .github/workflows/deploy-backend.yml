@@ -37,3 +37,4 @@ jobs:
           project: "zemili-service-backend"
           entrypoint: "apps/zemili/services/backend/main.ts"
           import-map: "./import_map.json"
+          root: "."
