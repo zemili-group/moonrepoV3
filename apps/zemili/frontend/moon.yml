@@ -1,0 +1,29 @@
+id: "fresh"
+
+tags: ["frontend", "fresh"]
+stack: "frontend"
+type: "application"
+language: "typescript"
+platform: "deno"
+
+tasks:
+  start:
+    command: "deno task start"
+    local: true
+    options:
+      cache: false
+  build:
+    command: "deno task build"
+    local: true
+  preview:
+    command: "deno task preview"
+    local: true
+  check:
+    command: "deno task check"
+    local: true
+  test:
+    command: "deno task test"
+    local: true
+  format:
+    command: "deno task format"
+    local: true
