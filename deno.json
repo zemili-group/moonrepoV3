@@ -1,13 +1,25 @@
 {
+  "compilerOptions": {
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "jsx": "react-jsx",
+    "jsxFactory": "h",
+    "jsxFragmentFactory": "Fragment"
+  },
   "imports": {
-    "@scope/": "./packages/",
-    "@scope/server": "./packages/server",
-    "@scope/auth": "./packages/auth",
-    "@scope/data": "./packages/data",
+    "$std/": "https://deno.land/std@0.216.0/",
     "@oak/oak": "jsr:@oak/oak@^16.1.0",
-    "@std/assert": "jsr:@std/assert@1"
+    "@scope/": "./packages/",
+    "@scope/auth": "./packages/auth/mod.ts",
+    "@scope/data": "./packages/data/mod.ts",
+    "@scope/server": "./packages/server/mod.ts",
+    "@std/assert": "jsr:@std/assert@1",
+    "autoprefixer": "npm:autoprefixer@^10.4.20",
+    "esbuild": "https://deno.land/x/esbuild@v0.14.0/mod.js",
+    "postcss": "npm:postcss@^8.4.41",
+    "tailwindcss": "npm:tailwindcss@^3.4.10"
   },
   "workspace": [
+    "./apps/zemili/frontend",
     "./apps/zemili/backend",
     "./packages/auth",
     "./packages/server",
