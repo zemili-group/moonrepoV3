@@ -1,0 +1,7 @@
+{
+    "tasks": {
+        "dev": "DENO_FUTURE=1 deno task dev",
+        "build": "DENO_FUTURE=1 deno task build",
+        "preview": "DENO_FUTURE=1 deno task preview"
+    }
+}

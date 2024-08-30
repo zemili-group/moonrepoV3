@@ -20,7 +20,6 @@
     "@momiji/cors": "jsr:@momiji/cors@^1.0.1"
   },
   "workspace": [
-    "./apps/zemili/server",
     "./apps/zemili/frontend",
     "./apps/zemili/backend",
     "./packages/auth",
