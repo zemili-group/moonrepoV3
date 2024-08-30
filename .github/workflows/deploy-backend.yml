@@ -32,15 +32,15 @@ jobs:
       #   run: echo "DENO_FUTURE=1" >> $GITHUB_ENV
 
 
-      - name: Run deno install
-        run: deno install || true
+      # - name: Run deno install
+      #   run: deno install || true
       
-      - name: Run deployctl
-        run: deployctl run --watch --project=zemili-service-backend --entrypoint=main.ts --root=apps/zemili/backend
+      # - name: Run deployctl
+      #   run: deployctl run --watch --project=zemili-service-backend --entrypoint=main.ts --root=apps/zemili/backend
 
-      # - name: Upload to Deno Deploy
-      #   uses: denoland/deployctl@v1
-      #   with:
-      #     project: "zemili-service-backend"
-      #     entrypoint: "main.ts"
-      #     root: "apps/zemili/backend"
+      - name: Upload to Deno Deploy
+        uses: denoland/deployctl@v1
+        with:
+          project: "zemili-service-backend"
+          entrypoint: "apps/zemili/backend/main.ts"
+          import-map: "./deno.json"
