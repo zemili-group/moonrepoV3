@@ -31,5 +31,5 @@ jobs:
         uses: denoland/deployctl@v1
         with:
           project: "zemili-frontend"
-          entrypoint: "apps/zemili/frontend/.svelte-kit/output/server/index.js"
-          root: ""
+          entrypoint: ".svelte-kit/output/server/index.js"
+          root: "apps/zemili/frontend"
