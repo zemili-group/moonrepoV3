@@ -31,8 +31,7 @@ jobs:
         run: "DENO_FUTURE=1 deno install"
 
       - name: Build step
-        run: "DENO_FUTURE=1 deno task build"
-
+        run: "DENO_FUTURE=1 deno run build"
 
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
