@@ -1,0 +1,11 @@
+{
+  "imports": {
+    "@oak/oak": "jsr:@oak/oak@^16.1.0",
+    "path-to-regexp": "npm:path-to-regexp@^6.2.1",
+    "@momiji/cors": "jsr:@momiji/cors@^1.0.1"
+  },
+  "tasks": {
+    "dev": "deno run --allow-net --watch mod.ts",
+    "start": "deno run --allow-net mod.ts"
+  }
+}
