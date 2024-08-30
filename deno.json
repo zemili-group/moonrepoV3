@@ -19,6 +19,7 @@
     "tailwindcss": "npm:tailwindcss@^3.4.10"
   },
   "workspace": [
+    "./apps/zemili/server",
     "./apps/zemili/frontend",
     "./apps/zemili/backend",
     "./packages/auth",
@@ -27,13 +28,9 @@
   ],
   "fmt": {
     "semicolons": "false",
-    "ignore": [
-      "**/node_modules"
-    ]
+    "ignore": ["**/node_modules"]
   },
   "lint": {
-    "ignore": [
-      "**/node_modules"
-    ]
+    "ignore": ["**/node_modules"]
   }
 }
