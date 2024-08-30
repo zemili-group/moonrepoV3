@@ -23,13 +23,17 @@ jobs:
         with:
           deno-version: v1.x
 
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
+      # - name: Install Node.js
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: lts/*
 
-      - name: Set Deno Future environment variable
-        run: echo "DENO_FUTURE=1" >> $GITHUB_ENV
+      # - name: Set Deno Future environment variable
+      #   run: echo "DENO_FUTURE=1" >> $GITHUB_ENV
+
+
+      - name: Run deno install
+        run: deno install
 
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
