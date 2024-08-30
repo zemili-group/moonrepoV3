@@ -35,4 +35,4 @@ jobs:
         with:
           project: "zemili-frontend"
           entrypoint: "index.js"
-          root: "apps/zemili/frontend/.svelte-kit/output"
+          root: ".svelte-kit/output"
