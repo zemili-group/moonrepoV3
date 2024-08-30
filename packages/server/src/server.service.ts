@@ -31,7 +31,7 @@
 import { Application } from "jsr:@oak/oak/application";
 import { Router } from "jsr:@oak/oak/router";
 import type { Context } from "jsr:@oak/oak/context";
-import { cors, type CorsOptions } from "@momiji/cors/";
+import { cors, type CorsOptions } from "@momiji/cors";
 
 /**
  * Represents a route handler function.
