@@ -37,10 +37,7 @@ jobs:
       
       # - name: Run deployctl
       #   run: deployctl run --watch --project=zemili-service-backend --entrypoint=main.ts --root=apps/zemili/backend
-
-      - name: Install Deno Deploy CLI
-        run: deno install -A -f -n deployctl https://deno.land/x/deploy/deployctl.ts
-
+      
       - name: Run deno install
         run: deno install
 
