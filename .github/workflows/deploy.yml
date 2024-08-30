@@ -24,7 +24,7 @@ jobs:
           deno-version: v1.x
 
       - name: Build step
-        run: "deno task build"
+        run: "npm run build"
         working-directory: "apps/zemili/frontend"
 
       - name: Upload to Deno Deploy
