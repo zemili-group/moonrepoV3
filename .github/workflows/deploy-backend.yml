@@ -33,11 +33,14 @@ jobs:
 
 
       - name: Run deno install
-        run: deno install
+        run: deno install || true
+      
+      - name: Run deployctl
+        run: deployctl run --watch --project=zemili-service-backend --entrypoint=main.ts --root=apps/zemili/backend
 
-      - name: Upload to Deno Deploy
-        uses: denoland/deployctl@v1
-        with:
-          project: "zemili-service-backend"
-          entrypoint: "main.ts"
-          root: "apps/zemili/backend"
+      # - name: Upload to Deno Deploy
+      #   uses: denoland/deployctl@v1
+      #   with:
+      #     project: "zemili-service-backend"
+      #     entrypoint: "main.ts"
+      #     root: "apps/zemili/backend"
