@@ -37,9 +37,9 @@ jobs:
       
       # - name: Run deployctl
       #   run: deployctl run --watch --project=zemili-service-backend --entrypoint=main.ts --root=apps/zemili/backend
-      
-      - name: Run deno install
-        run: deno install
+
+      # - name: Run deno install
+      #   run: deno install
 
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
