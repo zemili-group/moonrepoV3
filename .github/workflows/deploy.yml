@@ -39,4 +39,4 @@ jobs:
         with:
           project: "zemili-frontend"
           entrypoint: "apps/zemili/frontend/.svelte-kit/output/server/index.js"
-          import-map: "./deno.json"
+          root: ""
