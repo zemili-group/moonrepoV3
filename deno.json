@@ -16,7 +16,8 @@
     "autoprefixer": "npm:autoprefixer@^10.4.20",
     "esbuild": "https://deno.land/x/esbuild@v0.14.0/mod.js",
     "postcss": "npm:postcss@^8.4.41",
-    "tailwindcss": "npm:tailwindcss@^3.4.10"
+    "tailwindcss": "npm:tailwindcss@^3.4.10",
+    "@momiji/cors": "jsr:@momiji/cors@^1.0.1"
   },
   "workspace": [
     "./apps/zemili/server",
