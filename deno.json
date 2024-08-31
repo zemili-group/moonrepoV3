@@ -1,12 +1,17 @@
 {
   "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "jsx": "react-jsx",
     "jsxFactory": "h",
     "jsxFragmentFactory": "Fragment"
   },
   "imports": {
     "$std/": "https://deno.land/std@0.216.0/",
+    "@momiji/cors": "jsr:@momiji/cors@^1.0.1",
     "@oak/oak": "jsr:@oak/oak@^16.1.0",
     "@scope/": "./packages/",
     "@scope/auth": "./packages/auth/mod.ts",
@@ -16,8 +21,8 @@
     "autoprefixer": "npm:autoprefixer@^10.4.20",
     "esbuild": "https://deno.land/x/esbuild@v0.14.0/mod.js",
     "postcss": "npm:postcss@^8.4.41",
-    "tailwindcss": "npm:tailwindcss@^3.4.10",
-    "@momiji/cors": "jsr:@momiji/cors@^1.0.1"
+    "sveltekit-adapter-deno": "npm:sveltekit-adapter-deno@^0.12.1",
+    "tailwindcss": "npm:tailwindcss@^3.4.10"
   },
   "workspace": [
     "./apps/zemili/frontend",
@@ -28,9 +33,13 @@
   ],
   "fmt": {
     "semicolons": "false",
-    "ignore": ["**/node_modules"]
+    "ignore": [
+      "**/node_modules"
+    ]
   },
   "lint": {
-    "ignore": ["**/node_modules"]
+    "ignore": [
+      "**/node_modules"
+    ]
   }
 }
