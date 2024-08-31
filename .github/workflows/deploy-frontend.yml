@@ -43,4 +43,4 @@ jobs:
         with:
           project: "zemili-frontend"
           entrypoint: "mod.ts"
-          root: "apps/zemili/frontend"
+          root: "apps/zemili/frontend/build"
