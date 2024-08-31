@@ -25,7 +25,7 @@ jobs:
       - name: Install Deno
         uses: denoland/setup-deno@v1
         with:
-          deno-version: v1.x
+          deno-version: canary
 
       - name: Install Node.js
         uses: actions/setup-node@v4
@@ -33,10 +33,10 @@ jobs:
           node-version: lts/*
 
       - name: Install step
-        run: "DENO_FUTURE=1 deno install"
+        run: "deno install"
 
       - name: Build step
-        run: "DENO_FUTURE=1 deno task build"
+        run: "deno task build"
 
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
