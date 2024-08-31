@@ -1,4 +1,4 @@
-name: Deploy Zemili Service Backend
+name: Deploy Zemili Client Frontend
 on:
   push:
     branches: main
@@ -7,12 +7,16 @@ on:
 
 jobs:
   deploy:
-    name: Deploy Backend
+    name: Deploy Frontend
     runs-on: ubuntu-latest
 
     permissions:
       id-token: write # Needed for auth with Deno Deploy
       contents: read # Needed to clone the repository
+
+    defaults:
+      run:
+        working-directory: apps/zemili/frontend
 
     steps:
       - name: Clone repository
@@ -23,9 +27,20 @@ jobs:
         with:
           deno-version: v1.x
 
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Install step
+        run: "DENO_FUTURE=1 deno install"
+
+      - name: Build step
+        run: "DENO_FUTURE=1 deno task build"
+
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
-          project: "zemili-backend"
-          entrypoint: "apps/zemili/backend/main.ts"
-          import-map: "./deno.json"
+          project: "zemili-frontend"
+          entrypoint: "mod.ts"
+          root: "build"
