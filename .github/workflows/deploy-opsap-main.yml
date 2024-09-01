@@ -1,0 +1,100 @@
+name: Deploy Opsap Services
+
+on:
+  push:
+    branches: main
+  pull_request:
+    branches: main
+
+jobs:
+  deploy-backend:
+    name: Deploy Backend
+    runs-on: ubuntu-latest
+    if: "github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'pull_request')"
+    # Check if there are changes in the backend directory
+    continue-on-error: true
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check if backend has changed
+        id: backend_check
+        run: |
+          git diff --quiet HEAD^ HEAD -- apps/zemili/backend/
+        continue-on-error: true
+      
+      - name: Deploy Backend
+        if: steps.backend_check.outcome == 'failure'
+        permissions:
+          id-token: write # Needed for auth with Deno Deploy
+          contents: read # Needed to clone the repository
+
+        steps:
+          - name: Clone repository
+            uses: actions/checkout@v4
+
+          - name: Install Deno
+            uses: denoland/setup-deno@v1
+            with:
+              deno-version: v1.x
+
+          - name: Upload to Deno Deploy
+            uses: denoland/deployctl@v1
+            with:
+              project: "opsap-backend"
+              entrypoint: "apps/opsap/backend/main.ts"
+              import-map: "./deno.json"
+
+  deploy-frontend:
+    name: Deploy Frontend
+    runs-on: ubuntu-latest
+    needs: deploy-backend
+    if: "github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'pull_request')"
+    # Check if there are changes in the frontend directory
+    continue-on-error: true
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check if frontend has changed
+        id: frontend_check
+        run: |
+          git diff --quiet HEAD^ HEAD -- apps/opsap/frontend/
+        continue-on-error: true
+
+      - name: Deploy Frontend
+        if: steps.frontend_check.outcome == 'failure'
+        permissions:
+          id-token: write # Needed for auth with Deno Deploy
+          contents: read # Needed to clone the repository
+
+        defaults:
+          run:
+            working-directory: apps/opsap/frontend
+
+        steps:
+          - name: Clone repository
+            uses: actions/checkout@v4
+
+          - name: Install Deno
+            uses: denoland/setup-deno@v1
+            with:
+              deno-version: canary
+
+          - name: Install Node.js
+            uses: actions/setup-node@v4
+            with:
+              node-version: lts/*
+
+          - name: Install step
+            run: "deno install"
+
+          - name: Build step
+            run: "deno task build"
+
+          - name: Upload to Deno Deploy
+            uses: denoland/deployctl@v1
+            with:
+              project: "opsap-frontend"
+              entrypoint: "mod.ts"
+              root: "apps/opsap/frontend/build"
