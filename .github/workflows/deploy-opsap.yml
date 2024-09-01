@@ -12,6 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     if: "github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'pull_request')"
     continue-on-error: true
+    permissions:
+      id-token: write # Needed for auth with Deno Deploy
+      contents: read # Needed to clone the repository
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -46,6 +49,9 @@ jobs:
     needs: deploy-backend
     if: "github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'pull_request')"
     continue-on-error: true
+    permissions:
+      id-token: write # Needed for auth with Deno Deploy
+      contents: read # Needed to clone the repository
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
