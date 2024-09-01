@@ -1,4 +1,4 @@
-import { createServerService } from "@scope/server";
+import { createServerService } from "@scope/shared/server";
 
 export const server = createServerService("zemili-backend");
 

@@ -18,7 +18,7 @@
 </script>
 
 <Page>
-  <Navbar title="Svelte Native" large transparent centerTitle />
+  <Navbar title="OPSAP" large transparent centerTitle />
   <BlockTitle>Theme</BlockTitle>
 
   <List strong inset>
