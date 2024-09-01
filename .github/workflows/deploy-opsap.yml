@@ -11,16 +11,15 @@ jobs:
     name: Deploy Backend
     runs-on: ubuntu-latest
     if: "github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'pull_request')"
-    # Check if there are changes in the backend directory
     continue-on-error: true
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Check if backend has changed
+      - name: Check if backend or shared packages have changed
         id: backend_check
         run: |
-          git diff --quiet HEAD^ HEAD -- apps/zemili/backend/
+          git diff --quiet HEAD^ HEAD -- apps/opsap/backend/ packages/opsap/ packages/shared/
         continue-on-error: true
       
       - name: Deploy Backend
@@ -50,16 +49,15 @@ jobs:
     runs-on: ubuntu-latest
     needs: deploy-backend
     if: "github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'pull_request')"
-    # Check if there are changes in the frontend directory
     continue-on-error: true
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Check if frontend has changed
+      - name: Check if frontend or shared packages have changed
         id: frontend_check
         run: |
-          git diff --quiet HEAD^ HEAD -- apps/opsap/frontend/
+          git diff --quiet HEAD^ HEAD -- apps/opsap/frontend/ packages/opsap/ packages/shared/
         continue-on-error: true
 
       - name: Deploy Frontend
