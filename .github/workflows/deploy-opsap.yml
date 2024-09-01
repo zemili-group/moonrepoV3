@@ -7,35 +7,45 @@ on:
     branches: main
 
 jobs:
+  check-changes:
+    name: Check for changes
+    runs-on: ubuntu-latest
+    outputs:
+      backend: ${{ steps.filter.outputs.backend }}
+      frontend: ${{ steps.filter.outputs.frontend }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            backend:
+              - 'apps/opsap/backend/**'
+              - 'packages/opsap/**'
+              - 'packages/shared/**'
+            frontend:
+              - 'apps/opsap/frontend/**'
+              - 'packages/opsap/**'
+              - 'packages/shared/**'
+
   deploy-backend:
     name: Deploy Backend
+    needs: check-changes
+    if: needs.check-changes.outputs.backend == 'true'
     runs-on: ubuntu-latest
-    if: "github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'pull_request')"
     permissions:
-      id-token: write # Needed for auth with Deno Deploy
-      contents: read # Needed to clone the repository
+      id-token: write
+      contents: read
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Check if backend or shared packages have changed
-        id: backend_check
-        run: |
-          git diff --quiet HEAD^ HEAD -- apps/zemili/backend/ packages/opsap/ packages/shared/
-        continue-on-error: true
-      
-      - name: Clone repository
-        if: steps.backend_check.outcome == 'failure'
-        uses: actions/checkout@v4
-
       - name: Install Deno
-        if: steps.backend_check.outcome == 'failure'
         uses: denoland/setup-deno@v1
         with:
           deno-version: v1.x
 
       - name: Upload to Deno Deploy
-        if: steps.backend_check.outcome == 'failure'
         uses: denoland/deployctl@v1
         with:
           project: "opsap-backend"
@@ -44,51 +54,35 @@ jobs:
 
   deploy-frontend:
     name: Deploy Frontend
+    needs: [check-changes, deploy-backend]
+    if: needs.check-changes.outputs.frontend == 'true' || needs.check-changes.outputs.backend == 'true'
     runs-on: ubuntu-latest
-    needs: deploy-backend
-    if: "github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'pull_request')"
-    continue-on-error: true
     permissions:
-      id-token: write # Needed for auth with Deno Deploy
-      contents: read # Needed to clone the repository
+      id-token: write
+      contents: read
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Check if frontend or shared packages have changed
-        id: frontend_check
-        run: |
-          git diff --quiet HEAD^ HEAD -- apps/opsap/frontend/ packages/opsap/ packages/shared/
-        continue-on-error: true
-
-      - name: Clone repository
-        if: steps.frontend_check.outcome == 'failure'
-        uses: actions/checkout@v4
-
       - name: Install Deno
-        if: steps.frontend_check.outcome == 'failure'
         uses: denoland/setup-deno@v1
         with:
           deno-version: canary
 
       - name: Install Node.js
-        if: steps.frontend_check.outcome == 'failure'
         uses: actions/setup-node@v4
         with:
           node-version: lts/*
 
       - name: Install dependencies
-        if: steps.frontend_check.outcome == 'failure'
         run: deno install
         working-directory: apps/opsap/frontend
 
       - name: Build frontend
-        if: steps.frontend_check.outcome == 'failure'
         run: deno task build
         working-directory: apps/opsap/frontend
 
       - name: Upload to Deno Deploy
-        if: steps.frontend_check.outcome == 'failure'
         uses: denoland/deployctl@v1
         with:
           project: "opsap-frontend"
