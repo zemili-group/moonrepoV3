@@ -14,9 +14,9 @@
     "@momiji/cors": "jsr:@momiji/cors@^1.0.1",
     "@oak/oak": "jsr:@oak/oak@^16.1.0",
     "@scope/": "./packages/",
-    "@scope/auth": "./packages/auth/mod.ts",
-    "@scope/data": "./packages/data/mod.ts",
-    "@scope/server": "./packages/server/mod.ts",
+    "@scope/opsap/data": "./packages/opsap/data/mod.ts",
+    "@scope/shared/auth": "./packages/shared/auth/mod.ts",
+    "@scope/shared/server": "./packages/shared/server/mod.ts",
     "@std/assert": "jsr:@std/assert@1",
     "autoprefixer": "npm:autoprefixer@^10.4.20",
     "esbuild": "https://deno.land/x/esbuild@v0.14.0/mod.js",
@@ -25,11 +25,14 @@
     "tailwindcss": "npm:tailwindcss@^3.4.10"
   },
   "workspace": [
+    "./apps/opsap/mobile",
+    "./apps/opsap/frontend",
+    "./apps/opsap/backend",
     "./apps/zemili/frontend",
     "./apps/zemili/backend",
-    "./packages/auth",
-    "./packages/server",
-    "./packages/data"
+    "./packages/shared/auth",
+    "./packages/shared/server",
+    "./packages/opsap/data"
   ],
   "fmt": {
     "semicolons": "false",

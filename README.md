@@ -1,47 +1,17 @@
 ## Getting Started
 
-To execute tasks with Nx use the following syntax:
+<div align="center" justify="center">
+  <pre> <img width="310" alt="opsap logo" src="https://user-images.githubusercontent.com/65465380/225266823-0d1cbd53-e4a4-42da-98c3-ec60b07ab64b.png"> </pre>
+</div>
+<br>
 
-```
-nx <target> <project> <...options>
-```
+> Zemili monorepo workspace managing all projects
 
-You can also run multiple targets:
+> Demo - [https://dev.opsap.com](https://dev.opsap.com)
 
-```
-nx run-many -t <target1> <target2>
-```
+<br>
 
-..or add `-p` to filter specific projects
-
-```
-nx run-many -t <target1> <target2> -p <proj1> <proj2>
-```
-
-Targets can be defined in the `package.json` or `projects.json`. Learn more
-[in the docs](https://nx.dev/core-features/run-tasks).
-
-## Want better Editor Integration?
-
-Have a look at the [Nx Console extensions](https://nx.dev/nx-console). It
-provides autocomplete support, a UI for exploring and running tasks &
-generators, and more! Available for VSCode, IntelliJ and comes with a LSP for
-Vim users.
-
-## Ready to deploy?
-
-Just run `nx build demoapp` to build the application. The build artifacts will
-be stored in the `dist/` directory, ready to be deployed.
-
-## Set up CI!
-
-Nx comes with local caching already built-in (check your `nx.json`). On CI you
-might want to go a step further.
-
-- [Set up remote caching](https://nx.dev/core-features/share-your-cache)
-- [Set up task distribution across multiple machines](https://nx.dev/core-features/distribute-task-execution)
-- [Learn more how to setup CI](https://nx.dev/recipes/ci)
-
-## Connect with us!
-
-- [Join the community](https://nx.dev/community)
+<div align="center" justify="center">
+  <img alt="profile-page" src="https://user-images.githubusercontent.com/65465380/225267082-4e099e25-95c2-4025-b625-36fc3ac2c9cd.png">
+</div>
+<br>
