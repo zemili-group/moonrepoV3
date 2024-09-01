@@ -19,30 +19,26 @@ jobs:
       - name: Check if backend or shared packages have changed
         id: backend_check
         run: |
-          git diff --quiet HEAD^ HEAD -- apps/opsap/backend/ packages/opsap/ packages/shared/
+          git diff --quiet HEAD^ HEAD -- apps/zemili/backend/ packages/opsap/ packages/shared/
         continue-on-error: true
       
-      - name: Deploy Backend
+      - name: Clone repository
         if: steps.backend_check.outcome == 'failure'
-        permissions:
-          id-token: write # Needed for auth with Deno Deploy
-          contents: read # Needed to clone the repository
+        uses: actions/checkout@v4
 
-        steps:
-          - name: Clone repository
-            uses: actions/checkout@v4
+      - name: Install Deno
+        if: steps.backend_check.outcome == 'failure'
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
 
-          - name: Install Deno
-            uses: denoland/setup-deno@v1
-            with:
-              deno-version: v1.x
-
-          - name: Upload to Deno Deploy
-            uses: denoland/deployctl@v1
-            with:
-              project: "opsap-backend"
-              entrypoint: "apps/opsap/backend/main.ts"
-              import-map: "./deno.json"
+      - name: Upload to Deno Deploy
+        if: steps.backend_check.outcome == 'failure'
+        uses: denoland/deployctl@v1
+        with:
+          project: "opsap-backend"
+          entrypoint: "apps/opsap/backend/main.ts"
+          import-map: "./deno.json"
 
   deploy-frontend:
     name: Deploy Frontend
@@ -60,39 +56,36 @@ jobs:
           git diff --quiet HEAD^ HEAD -- apps/opsap/frontend/ packages/opsap/ packages/shared/
         continue-on-error: true
 
-      - name: Deploy Frontend
+      - name: Clone repository
         if: steps.frontend_check.outcome == 'failure'
-        permissions:
-          id-token: write # Needed for auth with Deno Deploy
-          contents: read # Needed to clone the repository
+        uses: actions/checkout@v4
 
-        defaults:
-          run:
-            working-directory: apps/opsap/frontend
+      - name: Install Deno
+        if: steps.frontend_check.outcome == 'failure'
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: canary
 
-        steps:
-          - name: Clone repository
-            uses: actions/checkout@v4
+      - name: Install Node.js
+        if: steps.frontend_check.outcome == 'failure'
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
 
-          - name: Install Deno
-            uses: denoland/setup-deno@v1
-            with:
-              deno-version: canary
+      - name: Install dependencies
+        if: steps.frontend_check.outcome == 'failure'
+        run: deno install
+        working-directory: apps/opsap/frontend
 
-          - name: Install Node.js
-            uses: actions/setup-node@v4
-            with:
-              node-version: lts/*
+      - name: Build frontend
+        if: steps.frontend_check.outcome == 'failure'
+        run: deno task build
+        working-directory: apps/opsap/frontend
 
-          - name: Install step
-            run: "deno install"
-
-          - name: Build step
-            run: "deno task build"
-
-          - name: Upload to Deno Deploy
-            uses: denoland/deployctl@v1
-            with:
-              project: "opsap-frontend"
-              entrypoint: "mod.ts"
-              root: "apps/opsap/frontend/build"
+      - name: Upload to Deno Deploy
+        if: steps.frontend_check.outcome == 'failure'
+        uses: denoland/deployctl@v1
+        with:
+          project: "opsap-frontend"
+          entrypoint: "mod.ts"
+          root: "apps/opsap/frontend/build"
