@@ -28,103 +28,103 @@
  * at ${serverUrl}/{collectionName}.
  */
 
-import { createRxDatabase, type RxDatabase } from "npm:rxdb";
-import { getRxStorageDenoKV } from "npm:rxdb/plugins/storage-denokv";
-import { schemas } from "../models/models.ts";
-import type {
-  CollectionName,
-  OPSAPDatabaseCollections,
-} from "../models/models.ts";
+// import { createRxDatabase, type RxDatabase } from "npm:rxdb";
+// import { getRxStorageDenoKV } from "npm:rxdb/plugins/storage-denokv";
+// import { schemas } from "../models/models.ts";
+// import type {
+//   CollectionName,
+//   OPSAPDatabaseCollections,
+// } from "../models/models.ts";
 
-export type OPSAPDatabase = RxDatabase<OPSAPDatabaseCollections>;
+// export type OPSAPDatabase = RxDatabase<OPSAPDatabaseCollections>;
 
-class RxDBService {
-  private static instance: RxDBService | null = null;
-  private db: RxDatabase<OPSAPDatabaseCollections> | null = null;
+// class RxDBService {
+//   private static instance: RxDBService | null = null;
+//   private db: RxDatabase<OPSAPDatabaseCollections> | null = null;
 
-  private constructor() {}
+//   private constructor() {}
 
-  public static getInstance(): RxDBService {
-    if (!RxDBService.instance) {
-      RxDBService.instance = new RxDBService();
-    }
-    return RxDBService.instance;
-  }
+//   public static getInstance(): RxDBService {
+//     if (!RxDBService.instance) {
+//       RxDBService.instance = new RxDBService();
+//     }
+//     return RxDBService.instance;
+//   }
 
-  public async initialize(
-    project: string,
-    serverUrl: string,
-  ): Promise<RxDatabase<OPSAPDatabaseCollections>> {
-    if (this.db) {
-      console.warn("Database already initialized");
-      return this.db;
-    }
+//   public async initialize(
+//     project: string,
+//     serverUrl: string,
+//   ): Promise<RxDatabase<OPSAPDatabaseCollections>> {
+//     if (this.db) {
+//       console.warn("Database already initialized");
+//       return this.db;
+//     }
 
-    console.log("Initializing RxDB with:", { project, serverUrl });
+//     console.log("Initializing RxDB with:", { project, serverUrl });
 
-    try {
-      const storage = getRxStorageDenoKV();
+//     try {
+//       const storage = getRxStorageDenoKV();
 
-      this.db = await createRxDatabase<OPSAPDatabaseCollections>({
-        name: project,
-        storage,
-        multiInstance: true,
-        eventReduce: true,
-      });
+//       this.db = await createRxDatabase<OPSAPDatabaseCollections>({
+//         name: project,
+//         storage,
+//         multiInstance: true,
+//         eventReduce: true,
+//       });
 
-      // Set up replication for each collection
-      (Object.keys(schemas) as CollectionName[]).forEach((collectionName) => {
-        const replicationState = this.db!.collections[collectionName]
-          .syncWithServer({
-            url: `${serverUrl}/${collectionName}`,
-            live: true,
-            pull: {
-              batchSize: 100,
-            },
-            push: {
-              batchSize: 100,
-            },
-          });
+//       // Set up replication for each collection
+//       (Object.keys(schemas) as CollectionName[]).forEach((collectionName) => {
+//         const replicationState = this.db!.collections[collectionName]
+//           .syncWithServer({
+//             url: `${serverUrl}/${collectionName}`,
+//             live: true,
+//             pull: {
+//               batchSize: 100,
+//             },
+//             push: {
+//               batchSize: 100,
+//             },
+//           });
 
-        // Handle replication events
-        replicationState.error$.subscribe((error: Error) => {
-          console.error(`Replication error for ${collectionName}:`, error);
-        });
+//         // Handle replication events
+//         replicationState.error$.subscribe((error: Error) => {
+//           console.error(`Replication error for ${collectionName}:`, error);
+//         });
 
-        replicationState.canceled$.subscribe(() => {
-          console.log(`Replication canceled for ${collectionName}`);
-        });
-      });
+//         replicationState.canceled$.subscribe(() => {
+//           console.log(`Replication canceled for ${collectionName}`);
+//         });
+//       });
 
-      console.log(
-        `RxDB '${project}' initialized with DenoKV storage and server replication`,
-      );
+//       console.log(
+//         `RxDB '${project}' initialized with DenoKV storage and server replication`,
+//       );
 
-      return this.db;
-    } catch (error) {
-      console.error("Error initializing RxDB:", error);
-      throw error;
-    }
-  }
+//       return this.db;
+//     } catch (error) {
+//       console.error("Error initializing RxDB:", error);
+//       throw error;
+//     }
+//   }
 
-  public async destroy(): Promise<void> {
-    if (this.db) {
-      await this.db.destroy();
-      this.db = null;
-    }
-  }
-}
+//   public async destroy(): Promise<void> {
+//     if (this.db) {
+//       await this.db.destroy();
+//       this.db = null;
+//     }
+//   }
+// }
 
-export const createRxDBService = async (
-  project: string,
-  serverUrl: string,
-): Promise<RxDatabase<OPSAPDatabaseCollections>> => {
-  try {
-    console.log("Creating RxDB service with:", { project, serverUrl });
-    const instance = RxDBService.getInstance();
-    return await instance.initialize(project, serverUrl);
-  } catch (error) {
-    console.error("Failed to create RxDB service:", error);
-    throw error;
-  }
-};
+// export const createRxDBService = async (
+//   project: string,
+//   serverUrl: string,
+// ): Promise<RxDatabase<OPSAPDatabaseCollections>> => {
+//   try {
+//     console.log("Creating RxDB service with:", { project, serverUrl });
+//     const instance = RxDBService.getInstance();
+//     return await instance.initialize(project, serverUrl);
+//   } catch (error) {
+//     console.error("Failed to create RxDB service:", error);
+//     throw error;
+//   }
+// };

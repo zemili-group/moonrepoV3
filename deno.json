@@ -12,12 +12,15 @@
   "imports": {
     "$std/": "https://deno.land/std@0.216.0/",
     "@momiji/cors": "jsr:@momiji/cors@^1.0.1",
+    "@oak/oak": "jsr:@oak/oak@^16.1.0",
     "@scope/opsap-data": "./packages/opsap/data/mod.ts",
     "@scope/shared-auth": "./packages/shared/auth/mod.ts",
+    "@scope/shared-data": "./packages/shared/data/mod.ts",
     "@scope/shared-server": "./packages/shared/server/mod.ts",
     "@std/assert": "jsr:@std/assert@1",
     "autoprefixer": "npm:autoprefixer@^10.4.20",
     "esbuild": "https://deno.land/x/esbuild@v0.14.0/mod.js",
+    "path-to-regexp": "npm:path-to-regexp@^6.2.1",
     "postcss": "npm:postcss@^8.4.41",
     "sveltekit-adapter-deno": "npm:sveltekit-adapter-deno@^0.12.1",
     "tailwindcss": "npm:tailwindcss@^3.4.10"
@@ -38,5 +41,8 @@
     "ignore": [
       "**/node_modules"
     ]
+  },
+  "fmt": {
+    "semiColons": false
   }
 }

@@ -11,14 +11,14 @@
   import { toggleMode, mode } from "mode-watcher";
   import { createEventDispatcher } from "svelte";
   import { Link } from "svelte-routing";
-  import {db} from '../lib/data/index'
+  // import {db} from '../lib/data/index'
 
   export let theme: "ios" | "material";
 
-  $effect(() => {
-    console.log('data db', Object.keys(db))
+  // $effect(() => {
+  //   console.log('data db', Object.keys(db))
 
-  })
+  // })
 
   const dispatch = createEventDispatcher<{ theme: "ios" | "material" }>();
 </script>
