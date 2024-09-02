@@ -21,17 +21,21 @@
     "autoprefixer": "npm:autoprefixer@^10.4.20",
     "esbuild": "https://deno.land/x/esbuild@v0.14.0/mod.js",
     "postcss": "npm:postcss@^8.4.41",
+    "rxdb": "npm:rxdb@^15.32.0",
+    "rxjs": "npm:rxjs@^7.8.1",
     "sveltekit-adapter-deno": "npm:sveltekit-adapter-deno@^0.12.1",
     "tailwindcss": "npm:tailwindcss@^3.4.10"
   },
   "workspace": [
-    "./apps/opsap/mobile",
-    "./apps/opsap/frontend",
-    "./apps/opsap/backend",
+    "./apps/opsap/clients/mobile",
+    "./apps/opsap/clients/frontend",
+    "./apps/opsap/services/backend-service",
+    "./apps/opsap/services/sync-service",
     "./apps/zemili/frontend",
     "./apps/zemili/backend",
     "./packages/shared/auth",
     "./packages/shared/server",
+    "./packages/shared/data",
     "./packages/opsap/data"
   ],
   "fmt": {

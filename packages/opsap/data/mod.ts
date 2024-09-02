@@ -1,1 +1,1 @@
-export * from "./src/rxdb/rxdb.service.ts";
+export * from "./src/index.ts";

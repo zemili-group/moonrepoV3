@@ -11,27 +11,37 @@ jobs:
     name: Check for changes
     runs-on: ubuntu-latest
     outputs:
-      backend: ${{ steps.filter.outputs.backend }}
+      backend-service: ${{ steps.filter.outputs.backend-service }}
+      sync-service: ${{ steps.filter.outputs.sync-service }}
       frontend: ${{ steps.filter.outputs.frontend }}
+      mobile: ${{ steps.filter.outputs.mobile }}
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v2
         id: filter
         with:
           filters: |
-            backend:
-              - 'apps/opsap/backend/**'
+            backend-service:
+              - 'apps/opsap/services/backend-service/**'
+              - 'packages/opsap/**'
+              - 'packages/shared/**'
+            sync-service:
+              - 'apps/opsap/services/sync-service/**'
               - 'packages/opsap/**'
               - 'packages/shared/**'
             frontend:
-              - 'apps/opsap/frontend/**'
+              - 'apps/opsap/clients/frontend/**'
+              - 'packages/opsap/**'
+              - 'packages/shared/**'
+            mobile:
+              - 'apps/opsap/clients/mobile/**'
               - 'packages/opsap/**'
               - 'packages/shared/**'
 
-  deploy-backend:
-    name: Deploy Backend
+  deploy-backend-service:
+    name: Deploy Backend Service
     needs: check-changes
-    if: needs.check-changes.outputs.backend == 'true'
+    if: needs.check-changes.outputs.backend-service == 'true'
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -49,13 +59,37 @@ jobs:
         uses: denoland/deployctl@v1
         with:
           project: "opsap-backend"
-          entrypoint: "apps/opsap/backend/main.ts"
+          entrypoint: "apps/opsap/services/backend-service/main.ts"
+          import-map: "./deno.json"
+    
+  deploy-sync-service:
+    name: Deploy Sync Service
+    needs: check-changes
+    if: needs.check-changes.outputs.sync-service == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      - name: Upload to Deno Deploy
+        uses: denoland/deployctl@v1
+        with:
+          project: "opsap-sync"
+          entrypoint: "apps/opsap/services/sync-service/main.ts"
           import-map: "./deno.json"
 
   deploy-frontend:
     name: Deploy Frontend
-    needs: [check-changes, deploy-backend]
-    if: needs.check-changes.outputs.frontend == 'true' || needs.check-changes.outputs.backend == 'true'
+    needs: [check-changes, deploy-backend-service, deploy-sync-service]
+    if: needs.check-changes.outputs.frontend == 'true' || needs.check-changes.outputs.backend-service == 'true' || needs.check-changes.outputs.sync-service == 'true'
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -88,3 +122,25 @@ jobs:
           project: "opsap-frontend"
           entrypoint: "mod.ts"
           root: "apps/opsap/frontend/build"
+
+  deploy-mobile:
+    name: Deploy Mobile
+    needs: [check-changes, deploy-backend-service, deploy-sync-service]
+    if: needs.check-changes.outputs.mobile == 'true' || needs.check-changes.outputs.backend-service == 'true' || needs.check-changes.outputs.sync-service == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: apps/opsap/clients/mobile
+
+      - name: Build mobile app
+        run: npm run build
+        working-directory: apps/opsap/clients/mobile
