@@ -1,5 +1,5 @@
 {
-  "name": "@scope/opsap/data",
+  "name": "@scope/opsap-data",
   "exports": "./mod.ts",
   "version": "0.0.1",
   "imports": {

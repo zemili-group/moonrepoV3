@@ -123,24 +123,24 @@ jobs:
           entrypoint: "mod.ts"
           root: "apps/opsap/frontend/build"
 
-  deploy-mobile:
-    name: Deploy Mobile
-    needs: [check-changes, deploy-backend-service, deploy-sync-service]
-    if: needs.check-changes.outputs.mobile == 'true' || needs.check-changes.outputs.backend-service == 'true' || needs.check-changes.outputs.sync-service == 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+  # deploy-mobile:
+  #   name: Deploy Mobile
+  #   needs: [check-changes, deploy-backend-service, deploy-sync-service]
+  #   if: needs.check-changes.outputs.mobile == 'true' || needs.check-changes.outputs.backend-service == 'true' || needs.check-changes.outputs.sync-service == 'true'
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
+  #     - name: Setup Node.js
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: lts/*
 
-      - name: Install dependencies
-        run: npm install
-        working-directory: apps/opsap/clients/mobile
+  #     - name: Install dependencies
+  #       run: npm install
+  #       working-directory: apps/opsap/clients/mobile
 
-      - name: Build mobile app
-        run: npm run build
-        working-directory: apps/opsap/clients/mobile
+  #     - name: Build mobile app
+  #       run: npm run build
+  #       working-directory: apps/opsap/clients/mobile

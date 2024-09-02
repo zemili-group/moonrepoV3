@@ -1,6 +1,6 @@
-import { createServerService } from "@scope/shared/server";
-import { createRxDBService, OPSAPDatabase } from "@scope/opsap/data";
-import { CollectionName } from "@scope/opsap/data/src/rxdb/models/models";
+import { createServerService } from "@scope/shared-server";
+import { createRxDBService, OPSAPDatabase } from "@scope/opsap-data";
+import { CollectionName } from "../../../../packages/opsap/data/src/rxdb/models/models.ts";
 
 let db: OPSAPDatabase;
 
@@ -8,7 +8,7 @@ export const server = createServerService("opsap-sync-service");
 
 // Home route: Displays a simple message indicating the server is running
 server.addRoute({
-  method: "GET",
+  method: "get",
   path: "/",
   handler: (ctx) => {
     ctx.response.body = `
@@ -17,14 +17,16 @@ server.addRoute({
   },
 });
 
-erver.addRoute({
-  method: "POST", // Use POST as the standard for syncing data
+server.addRoute({
+  method: "all", // Use POST as the standard for syncing data
   path: "/db-sync/:collectionName",
   handler: async (ctx) => {
-    const collectionName = ctx.params?.collectionName as CollectionName;
-    const collections = Object.values(CollectionName);
+    // @ts-ignore
+    const { collectionName } = ctx.params;
+    // @ts-ignore
+    const collections = Object.values(CollectionName) as CollectionName[];
 
-    if (!collections.includes(collectionName)) {
+    if (!collections.includes(collectionName as CollectionName)) {
       ctx.response.status = 400;
       ctx.response.body = "Invalid collection name";
       return;
@@ -52,8 +54,11 @@ erver.addRoute({
         });
 
       // Handle replication events
-      replicationState.error$.subscribe((error) => {
-        console.error(`Replication error for ${collectionName}:`, error);
+      replicationState.error$.subscribe((error: unknown) => {
+        console.error(
+          `Replication error for ${collectionName}:`,
+          error,
+        );
       });
 
       ctx.response.status = 200;

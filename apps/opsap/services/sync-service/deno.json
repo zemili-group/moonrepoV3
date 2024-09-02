@@ -4,7 +4,6 @@
     "start": "deno run -A ./main.ts"
   },
   "imports": {
-    "@oak/oak": "jsr:@oak/oak@^16.1.0",
-    "path-to-regexp": "npm:path-to-regexp@^6.2.1"
+    "@oak/oak": "jsr:@oak/oak@^16.1.0"
   }
 }

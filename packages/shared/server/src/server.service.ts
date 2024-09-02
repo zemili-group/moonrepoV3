@@ -44,7 +44,7 @@ type RouterMethod = (path: string, handler: RouteHandler) => void;
  * Represents a route configuration.
  */
 export interface Route {
-    method: "get" | "post" | "put" | "delete" | "patch";
+    method: "get" | "post" | "put" | "delete" | "patch" | "all";
     path: string;
     handler: RouteHandler;
 }

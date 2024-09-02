@@ -1,0 +1,11 @@
+{
+  "tasks": {
+    "dev": "deno run -A --watch main.ts",
+    "start": "deno run -A ./main.ts"
+  },
+  "imports": {
+    "@oak/oak": "jsr:@oak/oak@^16.1.0",
+    "rxdb": "npm:rxdb@^15.32.0",
+    "rxjs": "npm:rxjs@^7.8.1"
+  }
+}

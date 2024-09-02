@@ -12,17 +12,13 @@
   "imports": {
     "$std/": "https://deno.land/std@0.216.0/",
     "@momiji/cors": "jsr:@momiji/cors@^1.0.1",
-    "@oak/oak": "jsr:@oak/oak@^16.1.0",
-    "@scope/": "./packages/",
-    "@scope/opsap/data": "./packages/opsap/data/mod.ts",
-    "@scope/shared/auth": "./packages/shared/auth/mod.ts",
-    "@scope/shared/server": "./packages/shared/server/mod.ts",
+    "@scope/opsap-data": "./packages/opsap/data/mod.ts",
+    "@scope/shared-auth": "./packages/shared/auth/mod.ts",
+    "@scope/shared-server": "./packages/shared/server/mod.ts",
     "@std/assert": "jsr:@std/assert@1",
     "autoprefixer": "npm:autoprefixer@^10.4.20",
     "esbuild": "https://deno.land/x/esbuild@v0.14.0/mod.js",
     "postcss": "npm:postcss@^8.4.41",
-    "rxdb": "npm:rxdb@^15.32.0",
-    "rxjs": "npm:rxjs@^7.8.1",
     "sveltekit-adapter-deno": "npm:sveltekit-adapter-deno@^0.12.1",
     "tailwindcss": "npm:tailwindcss@^3.4.10"
   },
@@ -38,12 +34,6 @@
     "./packages/shared/data",
     "./packages/opsap/data"
   ],
-  "fmt": {
-    "semicolons": "false",
-    "ignore": [
-      "**/node_modules"
-    ]
-  },
   "lint": {
     "ignore": [
       "**/node_modules"
