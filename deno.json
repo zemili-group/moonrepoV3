@@ -18,6 +18,7 @@
     "@scope/shared-data": "./packages/shared/data/mod.ts",
     "@scope/shared-server": "./packages/shared/server/mod.ts",
     "@std/assert": "jsr:@std/assert@1",
+    "@sveltejs/vite-plugin-svelte": "npm:@sveltejs/vite-plugin-svelte@^3.1.2",
     "autoprefixer": "npm:autoprefixer@^10.4.20",
     "esbuild": "https://deno.land/x/esbuild@v0.14.0/mod.js",
     "path-to-regexp": "npm:path-to-regexp@^6.2.1",
@@ -43,6 +44,7 @@
     ]
   },
   "fmt": {
-    "semiColons": false
+    "semiColons": false,
+    "indentWidth": 2
   }
 }
