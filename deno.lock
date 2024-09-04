@@ -3877,11 +3877,6 @@
         ]
       },
       "apps/zemili/frontend": {
-        "dependencies": [
-          "npm:@sveltejs/kit@2",
-          "npm:@sveltejs/vite-plugin-svelte@^4.0.0-next.6",
-          "npm:vite@^5.0.3"
-        ],
         "packageJson": {
           "dependencies": [
             "npm:@playwright/test@^1.28.1",

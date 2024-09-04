@@ -9,6 +9,7 @@
     "jsxFactory": "h",
     "jsxFragmentFactory": "Fragment"
   },
+  "nodeModulesDir": "auto",
   "imports": {
     "$std/": "https://deno.land/std@0.216.0/",
     "@momiji/cors": "jsr:@momiji/cors@^1.0.1",

@@ -34,6 +34,7 @@ server.addRoute({
       return
     }
 
+    // @ts-ignore
     const collections = Object.values(CollectionName)
 
     if (!collections.includes(collectionName as CollectionName)) {
