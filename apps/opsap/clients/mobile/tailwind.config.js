@@ -1,5 +1,5 @@
-import { fontFamily } from "tailwindcss/defaultTheme";
-import konstaConfig from "konsta/config";
+import { fontFamily } from "tailwindcss/defaultTheme"
+import konstaConfig from "konsta/config"
 
 /** @type {import('tailwindcss').Config} */
 const config = konstaConfig({
@@ -60,6 +60,6 @@ const config = konstaConfig({
       },
     },
   },
-});
+})
 
-export default config;
+export default config

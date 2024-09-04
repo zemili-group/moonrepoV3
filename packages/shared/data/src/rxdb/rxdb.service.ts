@@ -21,20 +21,20 @@
  * // When done, destroy the database
  * await rxdbService.destroy();
  */
-import { createRxDatabase, type RxDatabase } from "npm:rxdb";
-import { getRxStorageDenoKV } from "npm:rxdb/plugins/storage-denokv";
+import { createRxDatabase, type RxDatabase } from "npm:rxdb"
+import { getRxStorageDenoKV } from "npm:rxdb/plugins/storage-denokv"
 
 class RxDBService {
-  private static instance: RxDBService | null = null;
-  private db: RxDatabase | null = null;
+  private static instance: RxDBService | null = null
+  private db: RxDatabase | null = null
 
   private constructor() {}
 
   public static getInstance(): RxDBService {
     if (!RxDBService.instance) {
-      RxDBService.instance = new RxDBService();
+      RxDBService.instance = new RxDBService()
     }
-    return RxDBService.instance;
+    return RxDBService.instance
   }
 
   public async initialize(
@@ -42,8 +42,8 @@ class RxDBService {
     kvPath: string = "",
   ): Promise<RxDatabase> {
     if (this.db) {
-      console.warn("Database already initialized");
-      return this.db;
+      console.warn("Database already initialized")
+      return this.db
     }
 
     this.db = await createRxDatabase({
@@ -56,16 +56,16 @@ class RxDBService {
       }),
       multiInstance: true,
       eventReduce: true,
-    });
+    })
 
-    console.log("RxDB initialized with DenoKV storage");
-    return this.db;
+    console.log("RxDB initialized with DenoKV storage")
+    return this.db
   }
 
   public async destroy(): Promise<void> {
     if (this.db) {
-      await this.db.destroy();
-      this.db = null;
+      await this.db.destroy()
+      this.db = null
     }
   }
 }
@@ -75,10 +75,10 @@ export const createRxDBService = async (
   kvPath: string = "",
 ): Promise<RxDatabase> => {
   try {
-    const instance = RxDBService.getInstance();
-    return await instance.initialize(name, kvPath);
+    const instance = RxDBService.getInstance()
+    return await instance.initialize(name, kvPath)
   } catch (error) {
-    console.error("Failed to create RxDB service:", error);
-    throw error; // Re-throw the error after logging
+    console.error("Failed to create RxDB service:", error)
+    throw error // Re-throw the error after logging
   }
-};
+}

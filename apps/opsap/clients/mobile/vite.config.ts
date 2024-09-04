@@ -1,6 +1,6 @@
-import { defineConfig, splitVendorChunkPlugin } from "vite";
-import { svelte } from "@sveltejs/vite-plugin-svelte";
-import { fileURLToPath } from "node:url";
+import { defineConfig, splitVendorChunkPlugin } from "vite"
+import { svelte } from "@sveltejs/vite-plugin-svelte"
+import { fileURLToPath } from "node:url"
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -39,4 +39,4 @@ export default defineConfig({
       "rxdb/plugins/storage-denokv",
     ],
   },
-});
+})

@@ -4,4 +4,4 @@ export const routes = [
     method: "GET",
     handler: () => "Hello, World!",
   },
-];
+]

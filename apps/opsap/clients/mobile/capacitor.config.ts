@@ -1,4 +1,4 @@
-import type { CapacitorConfig } from "@capacitor/cli";
+import type { CapacitorConfig } from "@capacitor/cli"
 
 const config: CapacitorConfig = {
   appId: "com.svelte.app",
@@ -10,6 +10,6 @@ const config: CapacitorConfig = {
       launchShowDuration: 1000,
     },
   },
-};
+}
 
-export default config;
+export default config

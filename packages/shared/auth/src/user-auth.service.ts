@@ -34,19 +34,19 @@
  * }
  * ```
  */
-import { hash, verify } from "@ts-rex/bcrypt";
+import { hash, verify } from "@ts-rex/bcrypt"
 import {
   create,
   verify as jwtVerify,
-} from "https://deno.land/x/djwt@v2.8/mod.ts";
+} from "https://deno.land/x/djwt@v2.8/mod.ts"
 
 /**
  * UserAuthService class for handling user authentication operations.
  */
 export class UserAuthService {
-  private static instance: UserAuthService | null = null;
-  private kv: Deno.Kv;
-  private jwtSecret: CryptoKey;
+  private static instance: UserAuthService | null = null
+  private kv: Deno.Kv
+  private jwtSecret: CryptoKey
 
   /**
    * Private constructor to enforce singleton pattern.
@@ -54,8 +54,8 @@ export class UserAuthService {
    * @param jwtSecret - CryptoKey for JWT operations.
    */
   private constructor(kv: Deno.Kv, jwtSecret: CryptoKey) {
-    this.kv = kv;
-    this.jwtSecret = jwtSecret;
+    this.kv = kv
+    this.jwtSecret = jwtSecret
   }
 
   /**
@@ -69,17 +69,17 @@ export class UserAuthService {
     jwtSecret: string,
   ): Promise<UserAuthService> {
     if (!UserAuthService.instance) {
-      const kv = await Deno.openKv(kvUrl);
+      const kv = await Deno.openKv(kvUrl)
       const cryptoKey = await crypto.subtle.importKey(
         "raw",
         new TextEncoder().encode(jwtSecret),
         { name: "HMAC", hash: "SHA-256" },
         false,
         ["sign", "verify"],
-      );
-      UserAuthService.instance = new UserAuthService(kv, cryptoKey);
+      )
+      UserAuthService.instance = new UserAuthService(kv, cryptoKey)
     }
-    return UserAuthService.instance;
+    return UserAuthService.instance
   }
 
   /**
@@ -88,8 +88,8 @@ export class UserAuthService {
    * @param password - User's password.
    */
   async signup(email: string, password: string) {
-    const hashedPassword = await hash(password);
-    await this.kv.set(["users", email], { email, hashedPassword });
+    const hashedPassword = await hash(password)
+    await this.kv.set(["users", email], { email, hashedPassword })
   }
 
   /**
@@ -101,19 +101,19 @@ export class UserAuthService {
   async login(email: string, password: string) {
     const user = await this.kv.get<
       { email: string; hashedPassword: string }
-    >(["users", email]);
-    if (!user.value) return null;
+    >(["users", email])
+    if (!user.value) return null
 
     const isValid = await verify(
       password,
       user.value.hashedPassword,
-    );
-    if (!isValid) return null;
+    )
+    if (!isValid) return null
 
-    const accessToken = await this.createToken(email, "15m");
-    const refreshToken = await this.createToken(email, "7d");
+    const accessToken = await this.createToken(email, "15m")
+    const refreshToken = await this.createToken(email, "7d")
 
-    return { accessToken, refreshToken };
+    return { accessToken, refreshToken }
   }
 
   /**
@@ -123,12 +123,12 @@ export class UserAuthService {
    * @returns Promise resolving to the created JWT token.
    */
   private async createToken(email: string, expiresIn: string) {
-    const exp = this.getExpirationTime(expiresIn);
+    const exp = this.getExpirationTime(expiresIn)
     return await create(
       { alg: "HS256", typ: "JWT" },
       { email, exp },
       this.jwtSecret,
-    );
+    )
   }
 
   /**
@@ -137,14 +137,14 @@ export class UserAuthService {
    * @returns Expiration time in seconds.
    */
   private getExpirationTime(duration: string): number {
-    const now = Math.floor(Date.now() / 1000);
-    const [value, unit] = duration.match(/(\d+)([mhd])/)?.slice(1) || [];
+    const now = Math.floor(Date.now() / 1000)
+    const [value, unit] = duration.match(/(\d+)([mhd])/)?.slice(1) || []
     const seconds = {
       m: 60,
       h: 3600,
       d: 86400,
-    }[unit as "m" | "h" | "d"] || 0;
-    return now + parseInt(value) * seconds;
+    }[unit as "m" | "h" | "d"] || 0
+    return now + parseInt(value) * seconds
   }
 
   /**
@@ -154,10 +154,10 @@ export class UserAuthService {
    */
   async verifyToken(token: string) {
     try {
-      const payload = await jwtVerify(token, this.jwtSecret);
-      return payload.email as string;
+      const payload = await jwtVerify(token, this.jwtSecret)
+      return payload.email as string
     } catch {
-      return null;
+      return null
     }
   }
 
@@ -167,13 +167,13 @@ export class UserAuthService {
    * @returns Promise resolving to new access and refresh tokens if successful, null otherwise.
    */
   async refresh(refreshToken: string) {
-    const email = await this.verifyToken(refreshToken);
-    if (!email) return null;
+    const email = await this.verifyToken(refreshToken)
+    if (!email) return null
 
-    const newAccessToken = await this.createToken(email, "15m");
-    const newRefreshToken = await this.createToken(email, "7d");
+    const newAccessToken = await this.createToken(email, "15m")
+    const newRefreshToken = await this.createToken(email, "7d")
 
-    return { accessToken: newAccessToken, refreshToken: newRefreshToken };
+    return { accessToken: newAccessToken, refreshToken: newRefreshToken }
   }
 }
 
@@ -187,5 +187,5 @@ export async function createUserAuth(
   kvUrl: string,
   jwtSecret: string,
 ): Promise<UserAuthService> {
-  return await UserAuthService.getInstance(kvUrl, jwtSecret);
+  return await UserAuthService.getInstance(kvUrl, jwtSecret)
 }

@@ -28,21 +28,21 @@
  * ```
  */
 
-import { hash, verify } from "@ts-rex/bcrypt";
+import { hash, verify } from "@ts-rex/bcrypt"
 
 /**
  * AppAuthService class for handling API key operations.
  */
 export class AppAuthService {
-  private static instance: AppAuthService | null = null;
-  private kv: Deno.Kv;
+  private static instance: AppAuthService | null = null
+  private kv: Deno.Kv
 
   /**
    * Private constructor to enforce singleton pattern.
    * @param kv - Deno.Kv instance for key-value storage.
    */
   private constructor(kv: Deno.Kv) {
-    this.kv = kv;
+    this.kv = kv
   }
 
   /**
@@ -52,10 +52,10 @@ export class AppAuthService {
    */
   public static async getInstance(kvUrl: string): Promise<AppAuthService> {
     if (!AppAuthService.instance) {
-      const kv = await Deno.openKv(kvUrl);
-      AppAuthService.instance = new AppAuthService(kv);
+      const kv = await Deno.openKv(kvUrl)
+      AppAuthService.instance = new AppAuthService(kv)
     }
-    return AppAuthService.instance;
+    return AppAuthService.instance
   }
 
   /**
@@ -64,13 +64,13 @@ export class AppAuthService {
    * @returns Promise resolving to the generated API key.
    */
   async generateApiKey(serviceName: string): Promise<string> {
-    const apiKey = crypto.randomUUID();
-    const hashedApiKey = await hash(apiKey);
+    const apiKey = crypto.randomUUID()
+    const hashedApiKey = await hash(apiKey)
     await this.kv.set(["api_keys", hashedApiKey], {
       serviceName,
       createdAt: Date.now(),
-    });
-    return apiKey;
+    })
+    return apiKey
   }
 
   /**
@@ -81,14 +81,14 @@ export class AppAuthService {
   async validateApiKey(apiKey: string): Promise<boolean> {
     const apiKeys = this.kv.list<
       { serviceName: string; createdAt: number }
-    >({ prefix: ["api_keys"] });
+    >({ prefix: ["api_keys"] })
     for await (const entry of apiKeys) {
-      const [_, hashedApiKey] = entry.key;
+      const [_, hashedApiKey] = entry.key
       if (await verify(apiKey, hashedApiKey as string)) {
-        return true;
+        return true
       }
     }
-    return false;
+    return false
   }
 
   /**
@@ -99,15 +99,15 @@ export class AppAuthService {
   async revokeApiKey(apiKey: string): Promise<boolean> {
     const apiKeys = this.kv.list<
       { serviceName: string; createdAt: number }
-    >({ prefix: ["api_keys"] });
+    >({ prefix: ["api_keys"] })
     for await (const entry of apiKeys) {
-      const [_, hashedApiKey] = entry.key;
+      const [_, hashedApiKey] = entry.key
       if (await verify(apiKey, hashedApiKey as string)) {
-        await this.kv.delete(["api_keys", hashedApiKey]);
-        return true;
+        await this.kv.delete(["api_keys", hashedApiKey])
+        return true
       }
     }
-    return false;
+    return false
   }
 
   /**
@@ -119,12 +119,12 @@ export class AppAuthService {
   > {
     const apiKeys = this.kv.list<
       { serviceName: string; createdAt: number }
-    >({ prefix: ["api_keys"] });
-    const result = [];
+    >({ prefix: ["api_keys"] })
+    const result = []
     for await (const entry of apiKeys) {
-      result.push(entry.value);
+      result.push(entry.value)
     }
-    return result;
+    return result
   }
 }
 
@@ -136,5 +136,5 @@ export class AppAuthService {
 export async function createAppAuthService(
   kvUrl: string,
 ): Promise<AppAuthService> {
-  return await AppAuthService.getInstance(kvUrl);
+  return await AppAuthService.getInstance(kvUrl)
 }

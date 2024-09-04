@@ -1,6 +1,6 @@
-import { createServerService } from "@scope/shared-server";
+import { createServerService } from "@scope/shared-server"
 
-export const server = createServerService("zemili-backend");
+export const server = createServerService("zemili-backend")
 
 server.addRoute({
   method: "get",
@@ -8,8 +8,8 @@ server.addRoute({
   handler: (ctx) => {
     ctx.response.body = `
         🚀🚀🚀 Server is running! 🚀🚀🚀
-        `;
+        `
   },
-});
+})
 
-await server.start(3000);
+await server.start(3000)

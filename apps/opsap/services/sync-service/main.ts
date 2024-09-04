@@ -6,6 +6,7 @@ import {
 } from "../../../../packages/opsap/data/src/rxdb/models/models.ts"
 import { RxDatabase } from "npm:rxdb"
 import { replicateRxCollection } from "npm:rxdb/plugins/replication"
+
 let db: RxDatabase<OPSAPDatabaseCollections>
 
 export const server = createServerService("opsap-sync-service")
@@ -25,10 +26,15 @@ server.addRoute({
   method: "all", // Use POST as the standard for syncing data
   path: "/db-sync/:collectionName",
   handler: async (ctx) => {
-    // @ts-ignore
-    const { collectionName } = ctx.params as { collectionName: CollectionName }
-    // @ts-ignore
-    const collections = Object.values(CollectionName) as CollectionName[]
+    const collectionName = (ctx as any).params?.collectionName as CollectionName
+
+    if (!collectionName) {
+      ctx.response.status = 400
+      ctx.response.body = "Invalid collection name"
+      return
+    }
+
+    const collections = Object.values(CollectionName)
 
     if (!collections.includes(collectionName as CollectionName)) {
       ctx.response.status = 400

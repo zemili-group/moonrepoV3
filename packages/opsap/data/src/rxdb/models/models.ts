@@ -1,5 +1,5 @@
 // models.ts
-import { RxCollection, RxJsonSchema } from "npm:rxdb";
+import { RxCollection, RxJsonSchema } from "npm:rxdb"
 
 import {
   ActivityFeed,
@@ -8,7 +8,7 @@ import {
   LogDraft,
   Notification,
   User,
-} from "../types/types.ts";
+} from "../types/types.ts"
 
 // Define schemas using the imported types
 
@@ -38,7 +38,7 @@ export const userSchema: RxJsonSchema<User> = {
     },
   },
   required: ["user_id", "email", "name", "password_hash", "created_at"],
-};
+}
 
 export const companySchema: RxJsonSchema<Company> = {
   title: "companies schema",
@@ -66,7 +66,7 @@ export const companySchema: RxJsonSchema<Company> = {
     },
   },
   required: ["company_id", "name", "created_at"],
-};
+}
 
 export const logDraftSchema: RxJsonSchema<LogDraft> = {
   title: "log draft schema",
@@ -111,7 +111,7 @@ export const logDraftSchema: RxJsonSchema<LogDraft> = {
     "date",
     "created_at",
   ],
-};
+}
 
 export const certificationSchema: RxJsonSchema<Certification> = {
   title: "certification schema",
@@ -135,7 +135,7 @@ export const certificationSchema: RxJsonSchema<Certification> = {
     "issued_at",
     "certificate_image",
   ],
-};
+}
 
 export const notificationSchema: RxJsonSchema<Notification> = {
   title: "notifications schema",
@@ -152,7 +152,7 @@ export const notificationSchema: RxJsonSchema<Notification> = {
     read: { type: "boolean" },
   },
   required: ["notif_id", "user_id", "message", "created_at"],
-};
+}
 
 export const activityFeedSchema: RxJsonSchema<ActivityFeed> = {
   title: "activity feed schema",
@@ -176,7 +176,7 @@ export const activityFeedSchema: RxJsonSchema<ActivityFeed> = {
     "activity_type",
     "details",
   ],
-};
+}
 
 export const schemas = {
   users: userSchema,
@@ -185,23 +185,23 @@ export const schemas = {
   certifications: certificationSchema,
   notifications: notificationSchema,
   activity_feed: activityFeedSchema,
-};
+}
 
-export type CollectionName = keyof typeof schemas;
+export type CollectionName = keyof typeof schemas
 
-export type UserCollection = RxCollection<User>;
-export type CompanyCollection = RxCollection<Company>;
-export type LogDraftCollection = RxCollection<LogDraft>;
-export type CertificationCollection = RxCollection<Certification>;
-export type NotificationCollection = RxCollection<Notification>;
-export type ActivityFeedCollection = RxCollection<ActivityFeed>;
+export type UserCollection = RxCollection<User>
+export type CompanyCollection = RxCollection<Company>
+export type LogDraftCollection = RxCollection<LogDraft>
+export type CertificationCollection = RxCollection<Certification>
+export type NotificationCollection = RxCollection<Notification>
+export type ActivityFeedCollection = RxCollection<ActivityFeed>
 
 // Define the database with the typed collections
 export type OPSAPDatabaseCollections = {
-  users: UserCollection;
-  companies: CompanyCollection;
-  log_drafts: LogDraftCollection;
-  certifications: CertificationCollection;
-  notifications: NotificationCollection;
-  activity_feed: ActivityFeedCollection;
-};
+  users: UserCollection
+  companies: CompanyCollection
+  log_drafts: LogDraftCollection
+  certifications: CertificationCollection
+  notifications: NotificationCollection
+  activity_feed: ActivityFeedCollection
+}
