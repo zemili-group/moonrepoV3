@@ -16,7 +16,8 @@ const config = {
       checkOrigin: false,
     },
     alias: {
-      "@/*": "./path/to/lib/*",
+      "@/*": "./src/lib/*",
+      "$utils": "./src/lib/utils.ts",
     },
   },
 }
