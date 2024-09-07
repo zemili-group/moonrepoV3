@@ -1,12 +1,26 @@
 <script>
 	import Button from '$lib/components/ui/button/button.svelte';
 	import Card from '$lib/components/ui/card/card.svelte';
-	import { BriefcaseBusiness, Users } from 'lucide-svelte';
+	import { BriefcaseBusiness, User, Users } from 'lucide-svelte';
+	import { env } from '$env/dynamic/public';
 
-	// testing change detection
+	let showWelcome = $state(!!env.PUBLIC_SHOW_WELCOME_SCREEN)
 </script>
 
-<main class="flex flex-col">
+
+{#if !showWelcome}
+<main class="container flex flex-col">
+<!-- navbar -->
+	<div
+		class="flex items-center justify-between bg-gradient-to-r from-blue-700 to-blue-500 px-6 py-4"
+	>
+		<div class="text-white">
+			<img src="/opsap6-white-final.png" alt="logo opsap" class="h-6 w-24" />
+		</div>
+		<Button variant="link" class="space-x-2 text-white"
+			><User size="18px" /> <span>LOGIN </span></Button
+		>
+	</div>
 	<div class="flex">
 		<div class="flex flex-1 flex-col py-4">
 			<h3 class="text-8xl font-extrabold">Divers</h3>
@@ -15,9 +29,10 @@
 				Automated Career Tracking,Digital logbooks, <br /> Jobsboard and applicant management
 				platform
 				<br />
-				fro the commercial diving industry
+				for the commercial diving industry
 			</p>
-			<Button class="mt-10 w-fit bg-gradient-to-r from-blue-700 to-blue-500">Signup for free</Button
+			<Button size="lg" class="mt-10 w-fit bg-gradient-to-r from-blue-700 to-blue-500 hover:from-blue-600 hover:to-blue-400"
+				>Signup for free</Button
 			>
 		</div>
 		<div class="flex-1 p-24 pr-10 pt-10">
@@ -56,4 +71,9 @@
 			<div>Global Users</div>
 		</div>
 	</Card>
+
+		<div class="flex items-center justify-between bg-black px-10 py-4">
+		<div class="text-white">@ OPSAP</div>
+	</div>
 </main>
+{/if}
