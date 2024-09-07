@@ -1,13 +1,14 @@
 {
-  "compilerOptions": {
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "jsx": "react-jsx",
-    "jsxFactory": "h",
-    "jsxFragmentFactory": "Fragment"
+  "tasks": {
+    "opsap-frontend:dev": "cd apps/opsap/clients/frontend && deno task dev",
+    "opsap-mobile:dev": "cd apps/opsap/clients/mobile && deno task dev",
+    "opsap-backend:dev": "cd apps/opsap/services/backend-service && deno task dev",
+    "opsap-sync:dev": "cd apps/opsap/services/sync-service && deno task dev",
+    "opsap-web:dev": "deno task opsap-backend:dev & deno task opsap-frontend:dev",
+    "opsap-mob:dev": "deno task opsap-mobile:dev & deno task opsap-sync:dev",
+    "zemili-frontend:dev": "cd apps/zemili/frontend && deno task dev",
+    "zemili-backend:dev": "cd apps/zemili/backend && deno task dev",
+    "zemili:dev": "deno task zemili-frontend:dev & deno task zemili-backend:dev"
   },
   "nodeModulesDir": "auto",
   "imports": {
