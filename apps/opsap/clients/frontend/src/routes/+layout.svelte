@@ -7,10 +7,10 @@
 			
 	let showWelcome = env.PUBLIC_SHOW_WELCOME_SCREEN
 
-	console.log('showWelcome', showWelcome)
-
- onMount(() => {
-	 goto('/launch')
+ 	onMount(() => {
+	 if (showWelcome){
+	   goto('/launch')
+	 }
  })
 </script>
 

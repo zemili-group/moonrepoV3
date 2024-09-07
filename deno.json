@@ -47,6 +47,10 @@
   },
   "fmt": {
     "semiColons": false,
-    "indentWidth": 2
+    "indentWidth": 2,
+    "exclude": [
+      "**/.sveltekit",
+      "**/build"
+    ]
   }
 }
