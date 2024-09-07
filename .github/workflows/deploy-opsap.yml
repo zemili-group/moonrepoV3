@@ -123,31 +123,31 @@ jobs:
           entrypoint: "mod.ts"
           root: "apps/opsap/frontend/build"
 
-  deploy-mobile:
-    name: Deploy Mobile
-    needs: check-changes
-    if: needs.check-changes.outputs.mobile == 'true' || needs.check-changes.outputs.backend-service == 'true' || needs.check-changes.outputs.sync-service == 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+  # deploy-mobile:
+  #   name: Deploy Mobile
+  #   needs: check-changes
+  #   if: needs.check-changes.outputs.mobile == 'true' || needs.check-changes.outputs.backend-service == 'true' || needs.check-changes.outputs.sync-service == 'true'
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
 
-      - name: Install Deno
-        uses: denoland/setup-deno@v1
-        with:
-          deno-version: canary
+  #     - name: Install Deno
+  #       uses: denoland/setup-deno@v1
+  #       with:
+  #         deno-version: canary
 
-      - name: Install dependencies
-        run: deno install --allow-scripts
-        working-directory: apps/opsap/clients/mobile
+  #     - name: Install dependencies
+  #       run: deno install --allow-scripts
+  #       working-directory: apps/opsap/clients/mobile
 
-      - name: Build mobile app
-        run: deno task build
-        working-directory: apps/opsap/clients/mobile
+  #     - name: Build mobile app
+  #       run: deno task build
+  #       working-directory: apps/opsap/clients/mobile
       
-      - name: Upload to Deno Deploy
-        uses: denoland/deployctl@v1
-        with:
-          project: "opsap-mobile"
-          entrypoint: "index.html"
-          root: "apps/opsap/clients/mobile/dist"
+  #     - name: Upload to Deno Deploy
+  #       uses: denoland/deployctl@v1
+  #       with:
+  #         project: "opsap-mobile"
+  #         entrypoint: "index.html"
+  #         root: "apps/opsap/clients/mobile/dist"

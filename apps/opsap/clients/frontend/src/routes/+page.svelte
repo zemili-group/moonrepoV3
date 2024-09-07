@@ -2,6 +2,8 @@
 	import Button from '$lib/components/ui/button/button.svelte';
 	import Card from '$lib/components/ui/card/card.svelte';
 	import { BriefcaseBusiness, Users } from 'lucide-svelte';
+
+	// testing change detection
 </script>
 
 <main class="flex flex-col">
