@@ -132,15 +132,22 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Install Deno
+        uses: denoland/setup-deno@v1
         with:
-          node-version: lts/*
+          deno-version: canary
 
       - name: Install dependencies
-        run: npm install
+        run: deno install --allow-scripts
         working-directory: apps/opsap/clients/mobile
 
       - name: Build mobile app
-        run: npm run build
+        run: deno task build
         working-directory: apps/opsap/clients/mobile
+      
+      - name: Upload to Deno Deploy
+        uses: denoland/deployctl@v1
+        with:
+          project: "opsap-mobile"
+          entrypoint: "index.html"
+          root: "apps/opsap/clients/mobile/dist"
