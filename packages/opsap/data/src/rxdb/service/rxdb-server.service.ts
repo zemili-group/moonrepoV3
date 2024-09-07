@@ -79,12 +79,12 @@ class RxDBService {
 
       // Convert schemas to RxCollectionCreator objects
       const collections: { [K in CollectionName]: RxCollectionCreator } = {
-        users: { schema: schemas.users },
-        companies: { schema: schemas.companies },
-        log_drafts: { schema: schemas.log_drafts },
-        certifications: { schema: schemas.certifications },
-        notifications: { schema: schemas.notifications },
-        activity_feed: { schema: schemas.activity_feed },
+        users: schemas.users,
+        companies: schemas.companies,
+        log_drafts: schemas.log_drafts,
+        certifications: schemas.certifications,
+        notifications: schemas.notifications,
+        activity_feed: schemas.activity_feed,
       } as const
 
       // Use the converted collections object

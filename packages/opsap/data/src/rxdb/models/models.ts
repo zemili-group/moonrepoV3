@@ -1,7 +1,7 @@
 // models.ts
-import { RxCollection, RxJsonSchema } from "npm:rxdb"
+import type { RxCollection, RxJsonSchema } from "npm:rxdb"
 
-import {
+import type {
   ActivityFeed,
   Certification,
   Company,
@@ -17,8 +17,9 @@ export const userSchema: RxJsonSchema<User> = {
   version: 0,
   description: "stores user profiles",
   type: "object",
+  primaryKey: "user_id",
   properties: {
-    user_id: { type: "string", primary: true },
+    user_id: { type: "string" },
     email: { type: "string" },
     name: { type: "string" },
     password_hash: { type: "string" },
@@ -45,8 +46,9 @@ export const companySchema: RxJsonSchema<Company> = {
   version: 0,
   description: "stores company profiles",
   type: "object",
+  primaryKey: "company_id",
   properties: {
-    company_id: { type: "string", primary: true },
+    company_id: { type: "string" },
     name: { type: "string" },
     logo: { type: "string" },
     description: { type: "string" },
@@ -73,8 +75,9 @@ export const logDraftSchema: RxJsonSchema<LogDraft> = {
   version: 0,
   description: "stores log drafts",
   type: "object",
+  primaryKey: "log_id",
   properties: {
-    log_id: { type: "string", primary: true },
+    log_id: { type: "string" },
     user_id: { type: "string" },
     company_id: { type: "string" },
     logbook_type: { type: "string" },
@@ -118,8 +121,9 @@ export const certificationSchema: RxJsonSchema<Certification> = {
   version: 0,
   description: "stores certifications",
   type: "object",
+  primaryKey: "cert_id",
   properties: {
-    cert_id: { type: "string", primary: true },
+    cert_id: { type: "string" },
     user_id: { type: "string" },
     name: { type: "string" },
     issuer: { type: "string" },
@@ -142,8 +146,9 @@ export const notificationSchema: RxJsonSchema<Notification> = {
   version: 0,
   description: "stores notifications",
   type: "object",
+  primaryKey: "notif_id",
   properties: {
-    notif_id: { type: "string", primary: true },
+    notif_id: { type: "string" },
     user_id: { type: "string" },
     message: { type: "string" },
     link: { type: "string" },
@@ -159,8 +164,9 @@ export const activityFeedSchema: RxJsonSchema<ActivityFeed> = {
   version: 0,
   description: "stores user activity feed",
   type: "object",
+  primaryKey: "activity_id",
   properties: {
-    activity_id: { type: "string", primary: true },
+    activity_id: { type: "string" },
     user_id: { type: "string" },
     timestamp: { type: "string", format: "date-time" },
     activity_type: { type: "string" },
@@ -179,12 +185,24 @@ export const activityFeedSchema: RxJsonSchema<ActivityFeed> = {
 }
 
 export const schemas = {
-  users: userSchema,
-  companies: companySchema,
-  log_drafts: logDraftSchema,
-  certifications: certificationSchema,
-  notifications: notificationSchema,
-  activity_feed: activityFeedSchema,
+  users: {
+    schema: userSchema,
+  },
+  companies: {
+    schema: companySchema,
+  },
+  log_drafts: {
+    schema: logDraftSchema,
+  },
+  certifications: {
+    schema: certificationSchema,
+  },
+  notifications: {
+    schema: notificationSchema,
+  },
+  activity_feed: {
+    schema: activityFeedSchema,
+  },
 }
 
 export type CollectionName = keyof typeof schemas
@@ -197,7 +215,7 @@ export type NotificationCollection = RxCollection<Notification>
 export type ActivityFeedCollection = RxCollection<ActivityFeed>
 
 // Define the database with the typed collections
-export type OPSAPDatabaseCollections = {
+export interface OPSAPDatabaseCollections {
   users: UserCollection
   companies: CompanyCollection
   log_drafts: LogDraftCollection

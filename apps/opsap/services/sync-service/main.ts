@@ -1,15 +1,14 @@
+import { replicateRxCollection } from "npm:rxdb/plugins/replication"
 import { createServerService } from "@scope/shared-server"
 import { createRxDBServerService } from "@scope/opsap-data"
 import {
   CollectionName,
   OPSAPDatabaseCollections,
-} from "../../../../packages/opsap/data/src/rxdb/models/models.ts"
+  schemas,
+} from "@scope/opsap-data"
 import { RxDatabase } from "npm:rxdb"
-import { replicateRxCollection } from "npm:rxdb/plugins/replication"
 
 let db: RxDatabase<OPSAPDatabaseCollections>
-
-// testing changes
 
 export const server = createServerService("opsap-sync-service")
 
@@ -36,10 +35,9 @@ server.addRoute({
       return
     }
 
-    // @ts-ignore
-    const collections = Object.values(CollectionName)
+    const collections = Object.keys(schemas)
 
-    if (!collections.includes(collectionName as CollectionName)) {
+    if (!collections.includes(collectionName)) {
       ctx.response.status = 400
       ctx.response.body = "Invalid collection name"
       return
@@ -78,4 +76,4 @@ server.addRoute({
   },
 })
 
-await server.start(3000)
+await server.start(3001)

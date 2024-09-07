@@ -1,10 +1,12 @@
 {
   "tasks": {
     "dev": "deno run -A --watch main.ts",
-    "start": "deno run -A ./main.ts"
+    "start": "deno run -A ./main.ts",
+    "compile": "deno compile --allow-net --allow-read --config ./tsconfig.json ./main.ts"
   },
   "imports": {
     "@oak/oak": "jsr:@oak/oak@^16.1.0",
-    "path-to-regexp": "npm:path-to-regexp@^6.2.1"
+    "path-to-regexp": "npm:path-to-regexp@^6.2.1",
+    "rxdb": "npm:rxdb@^15.32.0"
   }
 }
