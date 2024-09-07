@@ -126,7 +126,7 @@ jobs:
   deploy-mobile:
     name: Deploy Mobile
     needs: [check-changes, deploy-backend-service, deploy-sync-service]
-    if: ${{ needs.check-changes.outputs.mobile == 'true' || needs.check-changes.outputs.backend-service == 'true' || needs.check-changes.outputs.sync-service == 'true' }}
+    if: needs.check-changes.outputs.mobile == 'true' || needs.check-changes.outputs.backend-service == 'true' || needs.check-changes.outputs.sync-service == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
