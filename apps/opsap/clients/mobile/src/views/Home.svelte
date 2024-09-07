@@ -24,9 +24,6 @@
   // testing change detection
   // testing change detection
   // testing change detection
-  // testing change detection
-  // testing change detection
-  // testing change detection
 
   const dispatch = createEventDispatcher<{ theme: "ios" | "material" }>();
 </script>

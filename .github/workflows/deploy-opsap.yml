@@ -99,8 +99,8 @@ jobs:
 
   deploy-frontend:
     name: Deploy Frontend
-    needs: [check-changes, deploy-backend-service, deploy-sync-service]
-    if: needs.check-changes.outputs.frontend == 'true' || needs.check-changes.outputs.backend-service == 'true' || needs.check-changes.outputs.sync-service == 'true'
+    needs: check-changes
+    if: needs.check-changes.outputs.mobile == 'true' || needs.check-changes.outputs.backend-service == 'true' || needs.check-changes.outputs.sync-service == 'true'
     runs-on: ubuntu-latest
     permissions:
       id-token: write
