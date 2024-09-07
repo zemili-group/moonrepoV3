@@ -110,18 +110,18 @@ jobs:
 
       - name: Install dependencies
         run: deno install
-        working-directory: apps/opsap/frontend
+        working-directory: apps/opsap/clients/frontend
 
       - name: Build frontend
         run: deno task build
-        working-directory: apps/opsap/frontend
+        working-directory: apps/opsap/clients/frontend
 
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
           project: "opsap-frontend"
           entrypoint: "mod.ts"
-          root: "apps/opsap/frontend/build"
+          root: "apps/opsap/clients/frontend/build"
 
   # deploy-mobile:
   #   name: Deploy Mobile
