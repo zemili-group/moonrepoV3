@@ -6,6 +6,11 @@ on:
   pull_request:
     branches: main
 
+# Deployment logic:
+# - Frontend deploys on frontend, backend-service, or sync-service changes
+# - Mobile deploys only on backend-service or sync-service changes
+# This ensures mobile is updated with backend changes, but not for mobile-only changes
+
 jobs:
   check-changes:
     name: Check for changes
@@ -17,6 +22,10 @@ jobs:
       mobile: ${{ steps.filter.outputs.mobile }}
     steps:
       - uses: actions/checkout@v4
+      - name: Debug Git info
+        run: |
+          echo "Current branch: $(git rev-parse --abbrev-ref HEAD)"
+          echo "Last commit: $(git log -1 --oneline)"
       - uses: dorny/paths-filter@v2
         id: filter
         with:
@@ -37,6 +46,12 @@ jobs:
               - 'apps/opsap/clients/mobile/**'
               - 'packages/opsap/**'
               - 'packages/shared/**'
+      - name: Debug filter outputs
+        run: |
+          echo "Backend Service: ${{ steps.filter.outputs.backend-service }}"
+          echo "Sync Service: ${{ steps.filter.outputs.sync-service }}"
+          echo "Frontend: ${{ steps.filter.outputs.frontend }}"
+          echo "Mobile: ${{ steps.filter.outputs.mobile }}"
 
   deploy-backend-service:
     name: Deploy Backend Service
@@ -49,12 +64,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Install Deno
         uses: denoland/setup-deno@v1
         with:
           deno-version: v1.x
-
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
@@ -73,12 +86,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Install Deno
         uses: denoland/setup-deno@v1
         with:
           deno-version: v1.x
-
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
@@ -97,25 +108,20 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Install Deno
         uses: denoland/setup-deno@v1
         with:
           deno-version: canary
-
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
           node-version: lts/*
-
       - name: Install dependencies
         run: deno install
         working-directory: apps/opsap/frontend
-
       - name: Build frontend
         run: deno task build
         working-directory: apps/opsap/frontend
-
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
@@ -131,26 +137,21 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Debug outputs
         run: |
           echo "Mobile: ${{ needs.check-changes.outputs.mobile }}"
           echo "Backend Service: ${{ needs.check-changes.outputs.backend-service }}"
           echo "Sync Service: ${{ needs.check-changes.outputs.sync-service }}"
-
       - name: Install Deno
         uses: denoland/setup-deno@v1
         with:
           deno-version: canary
-
       - name: Install dependencies
         run: deno install --allow-scripts
         working-directory: apps/opsap/clients/mobile
-
       - name: Build mobile app
         run: deno task build
         working-directory: apps/opsap/clients/mobile
-      
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
