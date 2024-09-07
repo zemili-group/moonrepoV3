@@ -1,8 +1,7 @@
 import { createServerService } from "@scope/shared-server"
+import { routes } from "./src/routes/routes.ts"
 
 export const server = createServerService("zemili-backend")
-
-// testing change detection
 
 server.addRoute({
   method: "get",
@@ -13,5 +12,7 @@ server.addRoute({
         `
   },
 })
+
+server.addRoutes(routes)
 
 await server.start(3000)

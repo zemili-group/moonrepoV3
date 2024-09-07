@@ -131,7 +131,7 @@ export class ServerService {
    * @param routes An array of route configurations to add.
    */
   public addRoutes(routes: Route[]): void {
-    routes.forEach(this.addRoute, this)
+    routes.forEach((route) => this.addRoute(route))
   }
 
   /**

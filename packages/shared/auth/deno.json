@@ -3,6 +3,7 @@
   "exports": "./mod.ts",
   "version": "0.0.1",
   "imports": {
+    "@deno/kv": "npm:@deno/kv@^0.8.2",
     "@ts-rex/bcrypt": "jsr:@ts-rex/bcrypt@^1.0.3"
   }
 }

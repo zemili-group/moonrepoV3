@@ -13,6 +13,7 @@
     "jsr:@std/bytes@0.224": "0.224.0",
     "jsr:@std/crypto@0.223": "0.223.0",
     "jsr:@std/crypto@0.224": "0.224.0",
+    "jsr:@std/dotenv@*": "0.225.2",
     "jsr:@std/encoding@0.223": "0.223.0",
     "jsr:@std/encoding@1.0.0-rc.2": "1.0.0-rc.2",
     "jsr:@std/http@0.223": "0.223.0",
@@ -29,6 +30,8 @@
     "npm:@capacitor/core@^5.7.8": "5.7.8",
     "npm:@capacitor/ios@^5.7.8": "5.7.8_@capacitor+core@5.7.8",
     "npm:@capacitor/splash-screen@^5.0.8": "5.0.8_@capacitor+core@5.7.8",
+    "npm:@deno/kv@*": "0.8.2",
+    "npm:@deno/kv@~0.8.2": "0.8.2",
     "npm:@ionic/pwa-elements@^3.3.0": "3.3.0",
     "npm:@playwright/test@^1.28.1": "1.47.0",
     "npm:@sveltejs/kit@2": "2.5.26_@sveltejs+vite-plugin-svelte@3.1.2__svelte@4.2.12__vite@5.4.3_svelte@4.2.12_vite@5.4.3",
@@ -140,6 +143,9 @@
       "dependencies": [
         "jsr:@std/assert@0.224"
       ]
+    },
+    "@std/dotenv@0.225.2": {
+      "integrity": "e2025dce4de6c7bca21dece8baddd4262b09d5187217e231b033e088e0c4dd23"
     },
     "@std/encoding@0.223.0": {
       "integrity": "2b5615a75e00337ce113f34cf2f9b8c18182c751a8dcc8b1a2c2fc0e117bef00"
@@ -264,6 +270,27 @@
       "integrity": "sha512-mDRJS9QFxL5UMN74gRr6cBhOtkZjWwdttPCjBJNgcMDJIGi9IAKRJuDGTsqSUbp6zWrPF4AW29Mu6qhXtHpHWg==",
       "dependencies": [
         "@capacitor/core"
+      ]
+    },
+    "@deno/kv-darwin-arm64@0.8.2": {
+      "integrity": "sha512-4zEqI6DLgPwlr4zvPbsJpYVy6UnHk8T+JaK/WwXbiyAPZlLpQSORP1ylkl3aWhUEpSkcMe9h38zvvkuZOFELcw=="
+    },
+    "@deno/kv-darwin-x64@0.8.2": {
+      "integrity": "sha512-EPSyX1R2CkY8nLgPF2o3R9ellaf4T3UC0V2VCCpqMR0TYqIuGtgl5+MG22qnomFrL5yRJ5Raxy2kbXrxREfw8A=="
+    },
+    "@deno/kv-linux-x64-gnu@0.8.2": {
+      "integrity": "sha512-lxxyUBBh2RdYsi+4wy0VcQh/D0gjhAOBk3CUQJq2oapUMQpYCe2b+RNw21WncUscvjWBAWs4QXg6ixeuhjxQyQ=="
+    },
+    "@deno/kv-win32-x64-msvc@0.8.2": {
+      "integrity": "sha512-COpy1BpzvQmn5Gq39VBenQ2t31Xx0BzGDW2phooRlENlYJDz/u7dIGm1K7wtUWjpyAMduInDr0bfi+bf+RFuoA=="
+    },
+    "@deno/kv@0.8.2": {
+      "integrity": "sha512-dSvr7pBG5AcYMbWiFz8vGVoh40+vQ8avzJpifNz86Wq/nMNjqESCLjor4/A9A0g1mAWzWPlRG/fvgCrzZ+8ZCg==",
+      "dependencies": [
+        "@deno/kv-darwin-arm64",
+        "@deno/kv-darwin-x64",
+        "@deno/kv-linux-x64-gnu",
+        "@deno/kv-win32-x64-msvc"
       ]
     },
     "@esbuild/aix-ppc64@0.19.12": {
@@ -4104,7 +4131,8 @@
       },
       "packages/shared/auth": {
         "dependencies": [
-          "jsr:@ts-rex/bcrypt@^1.0.3"
+          "jsr:@ts-rex/bcrypt@^1.0.3",
+          "npm:@deno/kv@~0.8.2"
         ]
       },
       "packages/shared/data": {

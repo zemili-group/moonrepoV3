@@ -39,7 +39,6 @@ import {
   create,
   verify as jwtVerify,
 } from "https://deno.land/x/djwt@v2.8/mod.ts"
-
 /**
  * UserAuthService class for handling user authentication operations.
  */
@@ -67,9 +66,13 @@ export class UserAuthService {
   public static async getInstance(
     kvUrl: string,
     jwtSecret: string,
+    kvToken: string,
   ): Promise<UserAuthService> {
     if (!UserAuthService.instance) {
-      const kv = await Deno.openKv(kvUrl)
+      if (!jwtSecret) {
+        throw new Error("JWT_SECRET is not set")
+      }
+      const kv = await Deno.openKv();
       const cryptoKey = await crypto.subtle.importKey(
         "raw",
         new TextEncoder().encode(jwtSecret),
@@ -186,6 +189,16 @@ export class UserAuthService {
 export async function createUserAuth(
   kvUrl: string,
   jwtSecret: string,
+  kvToken: string,
 ): Promise<UserAuthService> {
-  return await UserAuthService.getInstance(kvUrl, jwtSecret)
+  if (!kvUrl) {
+    throw new Error("KV_URL is not set")
+  }
+  if (!jwtSecret) {
+    throw new Error("JWT_SECRET is not set")
+  }
+  if (!kvToken) {
+    throw new Error("KV_TOKEN is not set")
+  }
+  return await UserAuthService.getInstance(kvUrl, jwtSecret, kvToken)
 }
