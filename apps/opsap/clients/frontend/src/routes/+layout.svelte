@@ -4,7 +4,7 @@
 	import '../app.css';
 	import { goto } from '$app/navigation';
 			
-	let showWelcome = env.PUBLIC_SHOW_WELCOME_SCREEN
+	let showWelcome = !!env.PUBLIC_SHOW_WELCOME_SCREEN
 
  	onMount(() => {
 	 if (showWelcome){
