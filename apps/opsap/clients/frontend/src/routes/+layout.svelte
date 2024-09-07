@@ -1,7 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
 	import { env } from '$env/dynamic/public';
-	let { children } = $props();
 	import '../app.css';
 	import { goto } from '$app/navigation';
 			
@@ -11,7 +10,9 @@
 	 if (showWelcome){
 	   goto('/launch')
 	 }
- })
+  })
+
+	let { children } = $props();
 </script>
 
 <div class="">
