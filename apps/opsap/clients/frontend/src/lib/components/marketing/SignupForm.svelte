@@ -15,13 +15,40 @@
 	// Options for checkboxes
 	const options = ['Diver', 'Supervisor', 'ROV Pilot', 'Contractor', 'Client Rep'];
 
-	// Function to handle form submission
-	function handleSubmit() {
-		console.log('Email:', email);
-		console.log('Password:', password);
-		console.log('Company:', company);
-		console.log('Selected Options:', selectedOptions);
-	}
+	async function handleSubmit() {
+    console.log('Email:', email);
+    console.log('Password:', password);
+    console.log('Company:', company);
+    console.log('Selected Options:', selectedOptions);
+
+    const url = "http://localhost:3000/signup";
+
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email,
+                password,
+                // company,
+                // selectedOptions
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log('Server Response:', result);
+
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
 </script>
 
 <div>
