@@ -14,18 +14,20 @@
 	</p>
 </div>
 
-<div class="mt-24 grid grid-cols-2 gap-4">
-	<Card class="rounded-3xl bg-blue-500 p-8 px-12 text-white">
-		<p class="text-3xl font-semibold">
-			perspiciatis unde <br /> omnis iste natus error <br /> sit voluptatem
-		</p>
-		<p class="mt-8">
-			perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
-			totam rem aperiam, perspiciatis unde omnis iste
-		</p>
-		<Button class="mt-16 bg-white text-blue-500">Read Full Post</Button>
-	</Card>
-	<div class="grid grid-cols-1 gap-4">
+<div class="mt-24 grid grid-cols-1 gap-4 px-4 sm:grid-cols-2 sm:px-0">
+	<div class="flex flex-col gap-4">
+		<Card class="rounded-3xl bg-blue-500 p-8 px-12 text-white">
+			<p class="text-3xl font-semibold">
+				perspiciatis unde <br /> omnis iste natus error <br /> sit voluptatem
+			</p>
+			<p class="mt-8">
+				perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
+				totam rem aperiam, perspiciatis unde omnis iste
+			</p>
+			<Button class="mt-16 bg-white text-blue-500">Read Full Post</Button>
+		</Card>
+	</div>
+	<div class="flex flex-col gap-4">
 		<Card class="rounded-3xl bg-gray-100 p-8">
 			<p class="my-6">Profile</p>
 			<p>

@@ -3,7 +3,7 @@
 	import SignupForm from './SignupForm.svelte';
 </script>
 
-<div class="flex flex-row-reverse">
+<div class="hidden flex-row-reverse sm:flex">
 	<div class="mt-24 flex flex-1 flex-col py-4">
 		<h3 class="text-4xl font-extrabold">Perspiciatis unde omnis iste natus error sit voluptatem</h3>
 		<p class="mt-4 text-xl">

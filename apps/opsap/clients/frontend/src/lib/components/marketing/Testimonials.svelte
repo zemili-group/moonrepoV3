@@ -3,7 +3,7 @@
 	import Card from '../ui/card/card.svelte';
 </script>
 
-<div class="mt-32 grid h-[400px] grid-cols-3 gap-6">
+<div class="mt-32 hidden h-[400px] grid-cols-3 gap-6 sm:grid">
 	<div>
 		<Button variant="outline" class="mb-6 border-b border-black">Testimonials</Button>
 		<div class="text-4xl">What our user <br /> says about us</div>

@@ -6,26 +6,7 @@
 	import SignupForm from './SignupForm.svelte';
 </script>
 
-<div class="mt-32 flex flex-row-reverse">
-	<div class="mt-24 flex flex-1 flex-col py-4 pl-32">
-		<Button variant="outline" class="mb-4 w-fit border-b border-black">Stats</Button>
-		<p class="mt-4 text-xl">
-			vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum
-			deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati
-		</p>
-		<p class="mt-4 text-xl">
-			vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum
-			deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati
-		</p>
-
-		<SignupForm>
-			<Button
-				size="lg"
-				class="mt-10 w-fit bg-gradient-to-r from-blue-700 to-blue-500 hover:from-blue-600 hover:to-blue-400"
-				>Signup for free
-			</Button>
-		</SignupForm>
-	</div>
+<div class="mt-32 grid grid-cols-1 px-4 sm:grid-cols-2 sm:px-0">
 	<div class="mt-10 grid flex-1 grid-cols-3 gap-6">
 		<Card class="p-6">
 			<p class="my-6 font-semibold">Overall Total Dives</p>
@@ -75,5 +56,27 @@
 				<div>Inshore</div>
 			</div>
 		</Card>
+	</div>
+	<div class="mt-24 flex flex-col items-center py-4 sm:flex-row sm:items-start sm:pl-32">
+		<!-- Content -->
+		<div class="flex flex-col items-center text-center sm:items-start sm:text-left">
+			<Button variant="outline" class="mb-4 w-fit border-b border-black sm:mb-4">Stats</Button>
+			<p class="mt-4 text-xl">
+				vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium
+				voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati
+			</p>
+			<p class="mt-4 text-xl">
+				vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium
+				voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati
+			</p>
+
+			<SignupForm>
+				<Button
+					size="lg"
+					class="mt-10 w-fit bg-gradient-to-r from-blue-700 to-blue-500 hover:from-blue-600 hover:to-blue-400 sm:mt-10"
+					>Signup for free
+				</Button>
+			</SignupForm>
+		</div>
 	</div>
 </div>

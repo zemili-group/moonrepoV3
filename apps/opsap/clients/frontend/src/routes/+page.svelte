@@ -16,7 +16,7 @@
 </script>
 
 {#if !showWelcome}
-	<main class="container flex flex-col">
+	<main class="flex w-full flex-col sm:container">
 		<Header />
 		<Hero />
 		<InfiniteCarousel />
