@@ -4,7 +4,10 @@
   "version": "0.0.1",
   "imports": {
     "@momiji/cors": "jsr:@momiji/cors@^1.0.1",
+    "@nhttp/zod": "jsr:@nhttp/zod@^2.0.2",
     "@oak/oak": "jsr:@oak/oak@^16.1.0",
-    "rxdb": "npm:rxdb@^15.32.0"
+    "@olli/kvdex": "jsr:@olli/kvdex@^2.1.0",
+    "rxdb": "npm:rxdb@^15.32.0",
+    "zod": "npm:zod@^3.23.8"
   }
 }

@@ -1,0 +1,47 @@
+import { z } from "npm:zod"
+
+export const UserModel = z.object({
+  id: z.string().uuid().optional(),
+  email: z.string().email(),
+  username: z.string(),
+  name: z.string(),
+  password_hash: z.string().min(8),
+  role: z.string(),
+  terms_of_service: z.date(),
+  privacy_policy: z.date(),
+  created_at: z.string().datetime(),
+  updated_at: z.string().datetime(),
+  email_verified: z.boolean().optional().nullable(),
+  title: z.string().optional().nullable(),
+  first_name: z.string().optional().nullable(),
+  last_name: z.string().optional().nullable(),
+  profile_pic: z.string().url().optional().nullable(),
+  certifications: z.array(z.string().uuid()).optional().nullable(),
+  companies: z.array(z.string().uuid()).optional().nullable(),
+  log_drafts: z.array(z.string().uuid()).optional().nullable(),
+  signature: z.string().optional().nullable(),
+  age: z.number().optional().nullable(),
+  date_of_birth: z.date().optional().nullable(),
+  activities: z.array(z.string().uuid()).optional().nullable(),
+  first_language: z.string().optional().nullable(),
+  languages: z.array(z.string()).optional().nullable(),
+  timezone: z.string().optional().nullable(),
+  currency: z.string().optional().nullable(),
+  phone: z.string().optional().nullable(),
+  mobile_phone: z.string().optional().nullable(),
+  marketing: z.boolean().optional().nullable(),
+  notifications: z.boolean().optional().nullable(),
+  newsletter: z.boolean().optional().nullable(),
+  address: z.object({
+    country: z.string().optional().nullable(),
+    city: z.string().optional().nullable(),
+    street: z.string().optional().nullable(),
+    houseNumber: z.number().optional().nullable(),
+  }).optional().nullable(),
+  settings: z.object({
+    notifications: z.boolean().optional(),
+    theme: z.string().optional(),
+  }).optional().nullable(),
+})
+
+export type User = z.infer<typeof UserModel>

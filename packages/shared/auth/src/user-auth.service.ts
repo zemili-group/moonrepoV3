@@ -35,26 +35,41 @@
  * ```
  */
 import { hash, verify } from "@ts-rex/bcrypt"
+
 import {
   create,
   verify as jwtVerify,
 } from "https://deno.land/x/djwt@v2.8/mod.ts"
+
+interface UserAuthDatabase {
+  users: {
+    add: (user: any) => Promise<void>
+    findBySecondaryIndex: (
+      key: string,
+      value: any,
+    ) => Promise<{ result: any }>
+  }
+}
 /**
  * UserAuthService class for handling user authentication operations.
  */
 export class UserAuthService {
   private static instance: UserAuthService | null = null
-  private kv: Deno.Kv
   private jwtSecret: CryptoKey
+  private db: UserAuthDatabase
 
   /**
    * Private constructor to enforce singleton pattern.
    * @param kv - Deno.Kv instance for key-value storage.
    * @param jwtSecret - CryptoKey for JWT operations.
+   * @param db - KvDex database instance.
    */
-  private constructor(kv: Deno.Kv, jwtSecret: CryptoKey) {
-    this.kv = kv
+  private constructor(
+    jwtSecret: CryptoKey,
+    dbService: any,
+  ) {
     this.jwtSecret = jwtSecret
+    this.db = dbService
   }
 
   /**
@@ -64,15 +79,15 @@ export class UserAuthService {
    * @returns Promise resolving to an UserAuthService instance.
    */
   public static async getInstance(
-    kvUrl: string,
     jwtSecret: string,
-    kvToken: string,
+    dbService: any,
   ): Promise<UserAuthService> {
     if (!UserAuthService.instance) {
+      // jwt needed
       if (!jwtSecret) {
         throw new Error("JWT_SECRET is not set")
       }
-      const kv = await Deno.openKv();
+
       const cryptoKey = await crypto.subtle.importKey(
         "raw",
         new TextEncoder().encode(jwtSecret),
@@ -80,7 +95,10 @@ export class UserAuthService {
         false,
         ["sign", "verify"],
       )
-      UserAuthService.instance = new UserAuthService(kv, cryptoKey)
+      UserAuthService.instance = new UserAuthService(
+        cryptoKey,
+        dbService,
+      )
     }
     return UserAuthService.instance
   }
@@ -90,9 +108,22 @@ export class UserAuthService {
    * @param email - User's email.
    * @param password - User's password.
    */
-  async signup(email: string, password: string) {
+  async signup(
+    email: string,
+    password: string,
+  ) {
     const hashedPassword = await hash(password)
-    await this.kv.set(["users", email], { email, hashedPassword })
+    await this.db.users.add({
+      email,
+      role: "user",
+      username: email,
+      name: name || email,
+      password_hash: hashedPassword,
+      terms_of_service: new Date(),
+      privacy_policy: new Date(),
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    })
   }
 
   /**
@@ -102,14 +133,17 @@ export class UserAuthService {
    * @returns Promise resolving to access and refresh tokens if login is successful, null otherwise.
    */
   async login(email: string, password: string) {
-    const user = await this.kv.get<
-      { email: string; hashedPassword: string }
-    >(["users", email])
-    if (!user.value) return null
+    const { result } = await this.db.users.findBySecondaryIndex(
+      "email",
+      email,
+    )
+    if (!result) return null
+
+    const user = result as { password_hash: string }
 
     const isValid = await verify(
       password,
-      user.value.hashedPassword,
+      user.password_hash,
     )
     if (!isValid) return null
 
@@ -187,18 +221,11 @@ export class UserAuthService {
  * @returns Promise resolving to an UserAuthService instance.
  */
 export async function createUserAuth(
-  kvUrl: string,
   jwtSecret: string,
-  kvToken: string,
+  dbService: UserAuthDatabase,
 ): Promise<UserAuthService> {
-  if (!kvUrl) {
-    throw new Error("KV_URL is not set")
-  }
   if (!jwtSecret) {
     throw new Error("JWT_SECRET is not set")
   }
-  if (!kvToken) {
-    throw new Error("KV_TOKEN is not set")
-  }
-  return await UserAuthService.getInstance(kvUrl, jwtSecret, kvToken)
+  return await UserAuthService.getInstance(jwtSecret, dbService)
 }

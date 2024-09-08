@@ -5,12 +5,15 @@
     "jsr:@oak/commons@0.11": "0.11.0",
     "jsr:@oak/oak@*": "16.1.0",
     "jsr:@oak/oak@^16.1.0": "16.1.0",
+    "jsr:@olli/kvdex@*": "2.1.0",
     "jsr:@std/assert@0.223": "0.223.0",
     "jsr:@std/assert@0.224": "0.224.0",
     "jsr:@std/assert@0.226": "0.226.0",
     "jsr:@std/assert@1": "1.0.4",
     "jsr:@std/bytes@0.223": "0.223.0",
     "jsr:@std/bytes@0.224": "0.224.0",
+    "jsr:@std/bytes@^1.0.1": "1.0.2",
+    "jsr:@std/collections@^1.0.2": "1.0.5",
     "jsr:@std/crypto@0.223": "0.223.0",
     "jsr:@std/crypto@0.224": "0.224.0",
     "jsr:@std/dotenv@*": "0.225.2",
@@ -23,6 +26,7 @@
     "jsr:@std/media-types@0.223": "0.223.0",
     "jsr:@std/media-types@0.224": "0.224.1",
     "jsr:@std/path@0.223": "0.223.0",
+    "jsr:@std/ulid@1": "1.0.0",
     "jsr:@ts-rex/bcrypt@^1.0.3": "1.0.3",
     "npm:@capacitor/android@^5.7.8": "5.7.8_@capacitor+core@5.7.8",
     "npm:@capacitor/camera@^5.0.10": "5.0.10_@capacitor+core@5.7.8",
@@ -40,6 +44,7 @@
     "npm:@tailwindcss/typography@~0.5.14": "0.5.15_tailwindcss@3.4.10__postcss@8.4.45",
     "npm:@tsconfig/svelte@^5.0.4": "5.0.4",
     "npm:@types/eslint@^9.6.0": "9.6.1",
+    "npm:@types/node@*": "18.16.19",
     "npm:autoprefixer@^10.4.20": "10.4.20_postcss@8.4.45",
     "npm:bits-ui@~0.21.13": "0.21.13_svelte@4.2.12",
     "npm:clsx@^2.1.1": "2.1.1",
@@ -76,7 +81,8 @@
     "npm:vite@5.4.3": "5.4.3",
     "npm:vite@^5.0.3": "5.4.3",
     "npm:vite@^5.4.2": "5.4.3",
-    "npm:vitest@2": "2.0.5"
+    "npm:vitest@2": "2.0.5",
+    "npm:zod@^3.23.8": "3.23.8"
   },
   "jsr": {
     "@momiji/cors@1.0.1": {
@@ -109,6 +115,14 @@
         "npm:path-to-regexp@6.2.1"
       ]
     },
+    "@olli/kvdex@2.1.0": {
+      "integrity": "4f7cdfcebbc92c2fbef4974f85e196bcc0b7688dc52de8f89d14da99468c29d9",
+      "dependencies": [
+        "jsr:@std/bytes@^1.0.1",
+        "jsr:@std/collections",
+        "jsr:@std/ulid"
+      ]
+    },
     "@std/assert@0.223.0": {
       "integrity": "eb8d6d879d76e1cc431205bd346ed4d88dc051c6366365b1af47034b0670be24"
     },
@@ -129,6 +143,12 @@
     },
     "@std/bytes@0.224.0": {
       "integrity": "a2250e1d0eb7d1c5a426f21267ab9bdeac2447fa87a3d0d1a467d3f7a6058e49"
+    },
+    "@std/bytes@1.0.2": {
+      "integrity": "fbdee322bbd8c599a6af186a1603b3355e59a5fb1baa139f8f4c3c9a1b3e3d57"
+    },
+    "@std/collections@1.0.5": {
+      "integrity": "ab9eac23b57a0c0b89ba45134e61561f69f3d001f37235a248ed40be260c0c10"
     },
     "@std/crypto@0.223.0": {
       "integrity": "1aa9555ff56b09e197ad988ea200f84bc6781fd4fd83f3a156ee44449af93000",
@@ -185,6 +205,9 @@
       "dependencies": [
         "jsr:@std/assert@0.223"
       ]
+    },
+    "@std/ulid@1.0.0": {
+      "integrity": "d41c3d27a907714413649fee864b7cde8d42ee68437d22b79d5de4f81d808780"
     },
     "@ts-rex/bcrypt@1.0.3": {
       "integrity": "1a172769df1a357032e78cc13205dc34cc13f2307a2b81458bf988904ec8db02"
@@ -3919,6 +3942,9 @@
     },
     "zimmerframe@1.1.2": {
       "integrity": "sha512-rAbqEGa8ovJy4pyBxZM70hg4pE6gDgaQ0Sl9M3enG3I0d6H4XSAM3GeNGLKnsBpuijUow064sf7ww1nutC5/3w=="
+    },
+    "zod@3.23.8": {
+      "integrity": "sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g=="
     }
   },
   "remote": {
@@ -4132,8 +4158,11 @@
       "packages/opsap/data": {
         "dependencies": [
           "jsr:@momiji/cors@^1.0.1",
+          "jsr:@nhttp/zod@^2.0.2",
           "jsr:@oak/oak@^16.1.0",
-          "npm:rxdb@^15.32.0"
+          "jsr:@olli/kvdex@^2.1.0",
+          "npm:rxdb@^15.32.0",
+          "npm:zod@^3.23.8"
         ]
       },
       "packages/shared/auth": {
