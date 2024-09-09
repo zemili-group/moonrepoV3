@@ -41,7 +41,7 @@ let kv: Deno.Kv
 
 export const createKvDexService = async (db?: Deno.Kv) => {
   if (!db) {
-     kv = await Deno.openKv();
+    kv = await Deno.openKv()
   }
   return kvdex(kv, {
     numbers: collection(model<number>()),
