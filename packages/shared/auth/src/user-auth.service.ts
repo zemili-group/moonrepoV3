@@ -66,7 +66,7 @@ export class UserAuthService {
    */
   private constructor(
     jwtSecret: CryptoKey,
-    dbService: any,
+    dbService: UserAuthDatabase,
   ) {
     this.jwtSecret = jwtSecret
     this.db = dbService
@@ -74,13 +74,13 @@ export class UserAuthService {
 
   /**
    * Get or create an instance of UserAuthService.
-   * @param kvUrl - URL for the key-value store.
    * @param jwtSecret - Secret key for JWT operations.
+   * @param dbService - KvDex database instance.
    * @returns Promise resolving to an UserAuthService instance.
    */
   public static async getInstance(
     jwtSecret: string,
-    dbService: any,
+    dbService: UserAuthDatabase,
   ): Promise<UserAuthService> {
     if (!UserAuthService.instance) {
       // jwt needed
@@ -112,6 +112,9 @@ export class UserAuthService {
     email: string,
     password: string,
   ) {
+    const user = await this.findUserByEmail(email)
+    if (user) throw Error(`409 user already exists`)
+
     const hashedPassword = await hash(password)
     await this.db.users.add({
       email,
@@ -124,6 +127,18 @@ export class UserAuthService {
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     })
+
+    const accessToken = await this.createToken(email, "15m")
+    const refreshToken = await this.createToken(email, "7d")
+
+    return {
+      email,
+      role: "user",
+      username: email,
+      name: name || email,
+      accessToken,
+      refreshToken,
+    }
   }
 
   /**
@@ -133,13 +148,8 @@ export class UserAuthService {
    * @returns Promise resolving to access and refresh tokens if login is successful, null otherwise.
    */
   async login(email: string, password: string) {
-    const { result } = await this.db.users.findBySecondaryIndex(
-      "email",
-      email,
-    )
-    if (!result) return null
-
-    const user = result as { password_hash: string }
+    const user = await this.findUserByEmail(email)
+    if (!user) return null
 
     const isValid = await verify(
       password,
@@ -151,6 +161,18 @@ export class UserAuthService {
     const refreshToken = await this.createToken(email, "7d")
 
     return { accessToken, refreshToken }
+  }
+
+  private async findUserByEmail(email: string) {
+    const { result } = await this.db.users.findBySecondaryIndex(
+      "email",
+      email,
+    )
+
+    if (!result) return null
+    console.log(result)
+
+    return result[0]?.value as { password_hash: string } ?? null
   }
 
   /**
@@ -222,7 +244,7 @@ export class UserAuthService {
  */
 export async function createUserAuth(
   jwtSecret: string,
-  dbService: UserAuthDatabase,
+  dbService: any,
 ): Promise<UserAuthService> {
   if (!jwtSecret) {
     throw new Error("JWT_SECRET is not set")

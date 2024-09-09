@@ -2,7 +2,7 @@ import { createUserAuth } from "@scope/shared-auth"
 import { createKvDexService } from "@scope/opsap-data"
 import { config } from "../config/config.ts"
 
-const kvdexService = createKvDexService()
+const kvdexService = await createKvDexService()
 
 export const userAuth = await createUserAuth(
   config.getJwtSecret()!,

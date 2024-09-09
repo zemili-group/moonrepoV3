@@ -1,5 +1,5 @@
 import { collection, kvdex, model } from "jsr:@olli/kvdex"
-import { UserModel } from "../models/user.models.ts"
+import { UserModel } from "../models/user.model.ts"
 
 /**
  * KvDex Database Configuration and Usage Examples
@@ -39,9 +39,9 @@ import { UserModel } from "../models/user.models.ts"
 // TODO: Replace 'kv' with the actual Deno.Kv instance
 let kv: Deno.Kv
 
-export const createKvDexService = (db?: Deno.Kv) => {
+export const createKvDexService = async (db?: Deno.Kv) => {
   if (!db) {
-    kv = new Deno.Kv()
+     kv = await Deno.openKv();
   }
   return kvdex(kv, {
     numbers: collection(model<number>()),
