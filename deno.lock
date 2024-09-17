@@ -9,14 +9,13 @@
     "jsr:@std/assert@0.223": "0.223.0",
     "jsr:@std/assert@0.224": "0.224.0",
     "jsr:@std/assert@0.226": "0.226.0",
-    "jsr:@std/assert@1": "1.0.4",
+    "jsr:@std/assert@1": "1.0.5",
     "jsr:@std/bytes@0.223": "0.223.0",
     "jsr:@std/bytes@0.224": "0.224.0",
     "jsr:@std/bytes@^1.0.1": "1.0.2",
     "jsr:@std/collections@^1.0.2": "1.0.5",
     "jsr:@std/crypto@0.223": "0.223.0",
     "jsr:@std/crypto@0.224": "0.224.0",
-    "jsr:@std/dotenv@*": "0.225.2",
     "jsr:@std/encoding@0.223": "0.223.0",
     "jsr:@std/encoding@1.0.0-rc.2": "1.0.0-rc.2",
     "jsr:@std/http@0.223": "0.223.0",
@@ -34,7 +33,6 @@
     "npm:@capacitor/core@^5.7.8": "5.7.8",
     "npm:@capacitor/ios@^5.7.8": "5.7.8_@capacitor+core@5.7.8",
     "npm:@capacitor/splash-screen@^5.0.8": "5.0.8_@capacitor+core@5.7.8",
-    "npm:@deno/kv@*": "0.8.2",
     "npm:@deno/kv@~0.8.2": "0.8.2",
     "npm:@ionic/pwa-elements@^3.3.0": "3.3.0",
     "npm:@playwright/test@^1.28.1": "1.47.0",
@@ -44,7 +42,6 @@
     "npm:@tailwindcss/typography@~0.5.14": "0.5.15_tailwindcss@3.4.10__postcss@8.4.45",
     "npm:@tsconfig/svelte@^5.0.4": "5.0.4",
     "npm:@types/eslint@^9.6.0": "9.6.1",
-    "npm:@types/node@*": "18.16.19",
     "npm:autoprefixer@^10.4.20": "10.4.20_postcss@8.4.45",
     "npm:bits-ui@~0.21.13": "0.21.13_svelte@4.2.12",
     "npm:clsx@^2.1.1": "2.1.1",
@@ -134,8 +131,8 @@
     "@std/assert@0.226.0": {
       "integrity": "0dfb5f7c7723c18cec118e080fec76ce15b4c31154b15ad2bd74822603ef75b3"
     },
-    "@std/assert@1.0.4": {
-      "integrity": "d4c767ea578e5bc09c15b6e503376003e5b2d1f4c0cdf08524a92101ff4d7b96",
+    "@std/assert@1.0.5": {
+      "integrity": "e37da8e4033490ce613eec4ac1d78dba1faf5b02a3f6c573a28f15365b9b440f",
       "dependencies": [
         "jsr:@std/internal"
       ]
@@ -164,9 +161,6 @@
       "dependencies": [
         "jsr:@std/assert@0.224"
       ]
-    },
-    "@std/dotenv@0.225.2": {
-      "integrity": "e2025dce4de6c7bca21dece8baddd4262b09d5187217e231b033e088e0c4dd23"
     },
     "@std/encoding@0.223.0": {
       "integrity": "2b5615a75e00337ce113f34cf2f9b8c18182c751a8dcc8b1a2c2fc0e117bef00"
@@ -1325,8 +1319,11 @@
     "@types/mime@1.3.5": {
       "integrity": "sha512-/pyBZWSLD2n0dcHE3hq8s8ZvcETHtEuF+3E7XVt0Ig2nvsVQXdghHVcEkIWjy9A0wKfTn97a/PSDYohKIlnP/w=="
     },
-    "@types/node@18.16.19": {
-      "integrity": "sha512-IXl7o+R9iti9eBW4Wg2hx1xQDig183jj7YLn8F7udNceyfkbn1ZxmzZXuak20gR40D7pIkIY1kYGx5VIGbaHKA=="
+    "@types/node@22.5.4": {
+      "integrity": "sha512-FDuKUJQm/ju9fT/SeX/6+gBzoPzlVCzfzmGkwKvRHQVxi4BntVbyIwf6a4Xn62mrvndLiml6z/UBXIdEVjQLXg==",
+      "dependencies": [
+        "undici-types"
+      ]
     },
     "@types/pug@2.0.10": {
       "integrity": "sha512-Sk/uYFOBAB7mb74XcpizmH0KOR2Pv3D2Hmrh1Dmy5BmK3MpdSa5kqZcg6EKBdklU0bFXX9gCfzvpnyUehrPIuA=="
@@ -3713,6 +3710,9 @@
     },
     "typescript@5.5.4": {
       "integrity": "sha512-Mtq29sKDAEYP7aljRgtPOpTvOfbwRWlS6dPRzwjdE+C0R4brX/GUyhHSecbHMFLNBLcJIPt9nl9yG5TZ1weH+Q=="
+    },
+    "undici-types@6.19.8": {
+      "integrity": "sha512-ve2KP6f/JnbPBFyobGHuerC9g1FYGn/F8n1LWTwNxCEzd6IfqTwUQcNXgEtmmQ6DlRrC1hrSrBnCZPokRrDHjw=="
     },
     "undici@5.28.4": {
       "integrity": "sha512-72RFADWFqKmUb2hmmvNODKL3p9hcB6Gt2DOQMis1SEBaV6a4MH8soBvzg+95CYhCKPFedut2JY9bMfrDl9D23g==",
