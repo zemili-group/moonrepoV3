@@ -5,6 +5,8 @@
 	import { goto } from '$app/navigation';
 	import { authCheck } from '../lib/stores/user-store';
 
+	// forcing deployment
+
 	let showWelcome = !!env.PUBLIC_SHOW_WELCOME_SCREEN
 	let { children } = $props();
 	let authStatus = $derived(authCheck())
