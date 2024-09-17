@@ -2,9 +2,11 @@ name: Deploy Opsap Services
 
 on:
   push:
-    branches: main
+    branches:
+      - main
   pull_request:
-    branches: main
+    branches:
+      - main
 
 jobs:
   check-changes:
@@ -61,7 +63,7 @@ jobs:
           project: "opsap-backend"
           entrypoint: "apps/opsap/services/backend-service/main.ts"
           import-map: "./deno.json"
-    
+
   deploy-sync-service:
     name: Deploy Sync Service
     needs: check-changes
@@ -144,7 +146,7 @@ jobs:
   #     - name: Build mobile app
   #       run: deno task build
   #       working-directory: apps/opsap/clients/mobile
-      
+
   #     - name: Upload to Deno Deploy
   #       uses: denoland/deployctl@v1
   #       with:

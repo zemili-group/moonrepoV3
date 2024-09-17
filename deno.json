@@ -41,16 +41,11 @@
     "./packages/opsap/data"
   ],
   "lint": {
-    "ignore": [
-      "**/node_modules"
-    ]
+    "ignore": ["**/node_modules"]
   },
   "fmt": {
     "semiColons": false,
     "indentWidth": 2,
-    "exclude": [
-      "**/.sveltekit",
-      "**/build"
-    ]
+    "exclude": ["**/.sveltekit", "**/build"]
   }
 }
