@@ -9,7 +9,7 @@
 
 	let showWelcome = !!env.PUBLIC_SHOW_WELCOME_SCREEN
 	let { children } = $props();
-	let authStatus = $derived(authCheck())
+	// let authStatus = $derived(authCheck())
 
  	onMount(() => {
 	 if (showWelcome){
@@ -17,11 +17,11 @@
 	 }
   })
 
-	$effect(() => {
-		if (!authStatus) {
-			goto('/')
-		}
-	})
+	// $effect(() => {
+	// 	if (!authStatus) {
+	// 		goto('/')
+	// 	}
+	// })
 </script>
 
 <div class="">
