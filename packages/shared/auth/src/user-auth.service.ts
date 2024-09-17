@@ -105,10 +105,12 @@ export class UserAuthService {
 
   /**
    * Sign up a new user.
+   * @param name - User's name.
    * @param email - User's email.
    * @param password - User's password.
    */
   async signup(
+    name: string,
     email: string,
     password: string,
   ) {
@@ -116,20 +118,32 @@ export class UserAuthService {
     if (user) throw Error(`409 user already exists`)
 
     const hashedPassword = await hash(password)
-    await this.db.users.add({
+
+    const avatarUrl = `https://ui-avatars.com/api/?name=${
+      encodeURIComponent(name.charAt(0))
+    }`
+
+    const newUser = {
+      name,
       email,
       role: "user",
       username: email,
-      name: name || email,
+      avatar_url: avatarUrl,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    }
+
+    await this.db.users.add({
+      ...newUser,
       password_hash: hashedPassword,
       terms_of_service: new Date(),
       privacy_policy: new Date(),
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
+      acceptable_use_policy: new Date(),
+      data_proccessing_policy: new Date(),
     })
 
-    const accessToken = await this.createToken(email, "15m")
-    const refreshToken = await this.createToken(email, "7d")
+    const accessToken = await this.createToken(newUser, "15m")
+    const refreshToken = await this.createToken(newUser, "7d")
 
     return {
       email,
@@ -157,8 +171,8 @@ export class UserAuthService {
     )
     if (!isValid) return null
 
-    const accessToken = await this.createToken(email, "15m")
-    const refreshToken = await this.createToken(email, "7d")
+    const accessToken = await this.createToken(user, "15m")
+    const refreshToken = await this.createToken(user, "7d")
 
     return { accessToken, refreshToken }
   }
@@ -179,13 +193,17 @@ export class UserAuthService {
    * Create a JWT token.
    * @param email - User's email.
    * @param expiresIn - Token expiration time.
+   * @param avatarUrl - User's avatar URL.
    * @returns Promise resolving to the created JWT token.
    */
-  private async createToken(email: string, expiresIn: string) {
+  private async createToken(
+    user: unknown,
+    expiresIn: string,
+  ) {
     const exp = this.getExpirationTime(expiresIn)
     return await create(
       { alg: "HS256", typ: "JWT" },
-      { email, exp },
+      { user, exp },
       this.jwtSecret,
     )
   }

@@ -2,10 +2,11 @@ import { z } from "npm:zod"
 
 export const UserModel = z.object({
   id: z.string().uuid().optional(),
+  name: z.string(),
   email: z.string().email(),
   username: z.string(),
-  name: z.string(),
   password_hash: z.string().min(8),
+  avatar_url: z.string().url().optional().nullable(),
   role: z.string(),
   terms_of_service: z.date(),
   privacy_policy: z.date(),
@@ -42,6 +43,7 @@ export const UserModel = z.object({
     notifications: z.boolean().optional(),
     theme: z.string().optional(),
   }).optional().nullable(),
+  exp: z.number().optional().nullable(),
 })
 
 export type User = z.infer<typeof UserModel>

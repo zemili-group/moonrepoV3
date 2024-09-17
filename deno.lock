@@ -52,6 +52,7 @@
     "npm:eslint-plugin-svelte@^2.36.0": "2.43.0_eslint@9.10.0_svelte@4.2.12_postcss@8.4.45",
     "npm:eslint@9": "9.10.0",
     "npm:globals@15": "15.9.0",
+    "npm:jose@^5.9.2": "5.9.2",
     "npm:konsta@^3.1.4": "3.1.4",
     "npm:lucide-svelte@0.439": "0.439.0_svelte@4.2.12",
     "npm:mode-watcher@~0.3.1": "0.3.1_svelte@4.2.12",
@@ -2572,6 +2573,9 @@
     "jiti@1.21.6": {
       "integrity": "sha512-2yTgeWTWzMWkHu6Jp9NKgePDaYHbntiwvYuuJLbbN9vl7DC9DvXKOB2BC3ZZ92D3cvV/aflH0osDfwpHepQ53w=="
     },
+    "jose@5.9.2": {
+      "integrity": "sha512-ILI2xx/I57b20sd7rHZvgiiQrmp2mcotwsAH+5ajbpFQbrYVQdNHYlQhoA5cFb78CgtBOxtC05TeA+mcgkuCqQ=="
+    },
     "js-base64@3.7.7": {
       "integrity": "sha512-7rCnleh0z2CkXhH67J8K1Ytz0b2Y+yxTPL+/KOJoa20hfnVQ/3/T6W/KflYI4bRHRagNeXeU2bkNGI3v1oS/lw=="
     },
@@ -4068,6 +4072,7 @@
             "npm:eslint-plugin-svelte@^2.36.0",
             "npm:eslint@9",
             "npm:globals@15",
+            "npm:jose@^5.9.2",
             "npm:lucide-svelte@0.439",
             "npm:prettier-plugin-svelte@^3.1.2",
             "npm:prettier-plugin-tailwindcss@~0.6.5",

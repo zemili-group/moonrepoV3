@@ -2,13 +2,17 @@
 	import * as Dialog from '$lib/components/ui/dialog';
 	import { Input } from '$lib/components/ui/input/index.js';
 	import { Label } from '$lib/components/ui/label/index.js';
+	import { signup } from '@/requests/auth-request';
 	import Button from '../ui/button/button.svelte';
 	import Checkbox from '../ui/checkbox/checkbox.svelte';
+	import { processSignupResponse, userStore } from '@/stores/user-store';
 
 	// Variables to store input values
+	let name = '';
 	let email = '';
 	let password = '';
 	let company = '';
+	let isCreateSuccesfull = false;
 
 	// Array to store selected checkbox options
 	let selectedOptions: string[] = [];
@@ -17,39 +21,22 @@
 	const options = ['Diver', 'Supervisor', 'ROV Pilot', 'Contractor', 'Client Rep', 'Inspection'];
 
 	async function handleSubmit() {
-		console.log('Email:', email);
-		console.log('Password:', password);
-
-		const url = 'http://localhost:3000/signup';
-
-		try {
-			const response = await fetch(url, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({
-					email,
-					password
-					// company,
-					// selectedOptions
-				})
-			});
-
-			if (!response.ok) {
-				throw new Error(`HTTP error! status: ${response.status}`);
-			}
-
-			const result = await response.json();
-
-			if (response.ok) {
+		const response = await signup(name, email, password);
+		if (response) {
+			processSignupResponse(response);
+			if ($userStore) {
 				isCreateSuccesfull = true;
 			}
-
-			console.log('Server Response:', result);
-		} catch (error) {
-			console.error('Error:', error);
 		}
+		clearForm();
+	}
+
+	function clearForm() {
+		name = '';
+		email = '';
+		password = '';
+		company = '';
+		selectedOptions = [];
 	}
 
 	let terms = false;
@@ -57,9 +44,16 @@
 	let usePolicy = false;
 	let data = false;
 
-	$: isValid = !terms || !policy || !usePolicy || !data || !Boolean(email) || !Boolean(password);
+	$: isValid =
+		!terms ||
+		!policy ||
+		!usePolicy ||
+		!data ||
+		!Boolean(email) ||
+		!Boolean(password) ||
+		!Boolean(name);
 
-	let isCreateSuccesfull = false;
+	$: console.log('userStore', $userStore);
 </script>
 
 <div>
@@ -107,6 +101,10 @@
 					</Dialog.Description>
 				</Dialog.Header>
 				<div class="grid gap-4 py-4">
+					<div class="grid grid-cols-4 items-center gap-4">
+						<Label for="name" class="text-left">Name</Label>
+						<Input id="name" class="col-span-3" bind:value={name} type="text" />
+					</div>
 					<div class="grid grid-cols-4 items-center gap-4">
 						<Label for="email" class="text-left">Email</Label>
 						<Input id="email" class="col-span-3" bind:value={email} />

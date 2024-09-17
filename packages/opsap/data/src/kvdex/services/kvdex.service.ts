@@ -1,5 +1,6 @@
 import { collection, kvdex, model } from "jsr:@olli/kvdex"
 import { UserModel } from "../models/user.model.ts"
+import { DraftLogTotalsModel, UserStatsModel } from "../models/stats.model.ts"
 
 /**
  * KvDex Database Configuration and Usage Examples
@@ -63,6 +64,16 @@ export const createKvDexService = async (db?: Deno.Kv) => {
         currency: "secondary", // non-unique, for filtering users by currency
         "address.country": "secondary", // non-unique, for filtering users by country
         "address.city": "secondary", // non-unique, for filtering users by city
+      },
+    }),
+    userStats: collection(UserStatsModel, {
+      indices: {
+        id: "primary", // unique
+      },
+    }),
+    draftLogTotals: collection(DraftLogTotalsModel, {
+      indices: {
+        id: "primary", // unique
       },
     }),
     // Nested collections

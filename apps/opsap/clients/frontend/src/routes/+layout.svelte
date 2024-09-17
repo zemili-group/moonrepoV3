@@ -3,8 +3,11 @@
 	import { env } from '$env/dynamic/public';
 	import '../app.css';
 	import { goto } from '$app/navigation';
-			
+	import { authCheck } from '../lib/stores/user-store';
+
 	let showWelcome = !!env.PUBLIC_SHOW_WELCOME_SCREEN
+	let { children } = $props();
+	let authStatus = $derived(authCheck())
 
  	onMount(() => {
 	 if (showWelcome){
@@ -12,7 +15,11 @@
 	 }
   })
 
-	let { children } = $props();
+	$effect(() => {
+		if (!authStatus) {
+			goto('/')
+		}
+	})
 </script>
 
 <div class="">

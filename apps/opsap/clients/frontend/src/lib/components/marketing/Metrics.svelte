@@ -2,6 +2,19 @@
 	import { Briefcase, Landmark, NotebookPen, Users } from 'lucide-svelte';
 
 	import Card from '../ui/card/card.svelte';
+
+	import { statsStore } from '../../stores/stats-store';
+	import { onMount } from 'svelte';
+	import { getStats } from '@/requests/stats-request';
+
+
+	onMount(async () => {
+		const stats = await getStats("users")
+		console.log(stats)
+		statsStore.set({ userStats: stats.data })
+	})
+
+	$: console.log($statsStore)
 </script>
 
 <Card
@@ -10,13 +23,13 @@
 	<div class="grid grid-cols-2 gap-8 text-white sm:flex sm:justify-between">
 		<div class="flex flex-col items-center justify-center space-y-4">
 			<Users size={28} />
-			<div class="text-4xl">12,900</div>
-			<div>Global Users</div>
+			<div class="text-4xl">{$statsStore.userStats?.total_users}</div>
+			<div>Registered Users</div>
 		</div>
 		<div class="flex flex-col items-center justify-center space-y-4">
 			<Landmark size={28} />
 			<div class="text-4xl">356</div>
-			<div>Active Companies</div>
+			<div>Listed Companies</div>
 		</div>
 		<div class="flex flex-col items-center justify-center space-y-4">
 			<Briefcase size={28} />
