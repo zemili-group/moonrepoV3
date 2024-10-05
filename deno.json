@@ -1,5 +1,10 @@
 {
+  "compilerOptions": {
+    "lib": ["dom", "dom.iterable", "dom.asynciterable", "deno.ns"]
+  },
   "tasks": {
+    "opsap-admin:dev": "cd apps/opsap/clients/admin && deno task dev",
+    "opsap-remix:dev": "cd apps/opsap/clients/remix && deno task dev",
     "opsap-frontend:dev": "cd apps/opsap/clients/frontend && deno task dev",
     "opsap-mobile:dev": "cd apps/opsap/clients/mobile && deno task dev",
     "opsap-backend:dev": "cd apps/opsap/services/backend-service && deno task dev",
@@ -29,6 +34,7 @@
     "tailwindcss": "npm:tailwindcss@^3.4.10"
   },
   "workspace": [
+    "./apps/opsap/clients/admin",
     "./apps/opsap/clients/mobile",
     "./apps/opsap/clients/frontend",
     "./apps/opsap/services/backend-service",
